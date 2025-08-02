@@ -80,31 +80,53 @@ function gameLoop() {
     let moved = false;
     let nextTop = position.top;
     let nextLeft = position.left;
+    let diagonalMovement = false;
 
     // Check all pressed keys
     if (pressedKeys.has("ArrowUp")) {
         nextTop -= speed;
         moved = true;
-        currentDirection = 'up';
+        if (!pressedKeys.has("ArrowLeft") && !pressedKeys.has("ArrowRight")) {
+            currentDirection = 'up';
+        }
     }
     if (pressedKeys.has("ArrowDown")) {
         nextTop += speed;
         moved = true;
-        currentDirection = 'down';
+        if (!pressedKeys.has("ArrowLeft") && !pressedKeys.has("ArrowRight")) {
+            currentDirection = 'down';
+        }
     }
     if (pressedKeys.has("ArrowLeft")) {
         nextLeft -= speed;
         moved = true;
-        currentDirection = 'left';
+        if (!pressedKeys.has("ArrowUp") && !pressedKeys.has("ArrowDown")) {
+            currentDirection = 'left';
+        }
     }
     if (pressedKeys.has("ArrowRight")) {
         nextLeft += speed;
         moved = true;
-        currentDirection = 'right';
+        if (!pressedKeys.has("ArrowUp") && !pressedKeys.has("ArrowDown")) {
+            currentDirection = 'right';
+        }
+    }
+
+    // Check if moving diagonally
+    if ((pressedKeys.has("ArrowUp") || pressedKeys.has("ArrowDown")) &&
+        (pressedKeys.has("ArrowLeft") || pressedKeys.has("ArrowRight"))) {
+        diagonalMovement = true;
     }
 
     // Only update position if movement occurred
     if (moved) {
+        // Normalize diagonal movement speed
+        if (diagonalMovement) {
+            const diagonalSpeed = speed / Math.sqrt(2); // Normalize to same speed as single direction
+            nextTop = position.top + (nextTop - position.top) * (diagonalSpeed / speed);
+            nextLeft = position.left + (nextLeft - position.left) * (diagonalSpeed / speed);
+        }
+
         // Clamp within map bounds
         nextTop = Math.max(0, Math.min(mapSize - charSize, nextTop));
         nextLeft = Math.max(0, Math.min(mapSize - charSize, nextLeft));
