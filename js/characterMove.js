@@ -11,6 +11,7 @@ let pressedKeys = new Set();
 let animationFrame = 0;
 let animationTimer = 0;
 const animationSpeed = 8; // Frames per animation cycle
+let currentDirection = 'down'; // Track current direction
 
 // Track key presses
 document.addEventListener("keydown", (e) => {
@@ -35,8 +36,43 @@ function updateAnimation(isMoving) {
         animationTimer = 0;
     }
 
-    // Update sprite position (each frame is 27px wide, top row is at y=0)
-    character.style.backgroundPosition = `${-animationFrame * 27}px 0px`;
+    // Determine which row to use based on direction
+    let rowY = 0; // Default to first row (down)
+    if (currentDirection === 'right' || currentDirection === 'left') {
+        rowY = 54; // Third row (27px * 2 = 54px)
+    } else if (currentDirection === 'up') {
+        rowY = 108; // Fifth row (27px * 4 = 108px)
+    }
+
+    // Special case: when both down and right are pressed
+    if (pressedKeys.has("ArrowDown") && pressedKeys.has("ArrowRight")) {
+        rowY = 27; // Second row (27px * 1 = 27px)
+    }
+
+    // Special case: when both down and left are pressed
+    if (pressedKeys.has("ArrowDown") && pressedKeys.has("ArrowLeft")) {
+        rowY = 27; // Second row (27px * 1 = 27px)
+    }
+
+    // Special case: when both up and right are pressed
+    if (pressedKeys.has("ArrowUp") && pressedKeys.has("ArrowRight")) {
+        rowY = 81; // Fourth row (27px * 3 = 81px)
+    }
+
+    // Special case: when both up and left are pressed
+    if (pressedKeys.has("ArrowUp") && pressedKeys.has("ArrowLeft")) {
+        rowY = 81; // Fourth row (27px * 3 = 81px)
+    }
+
+    // Update sprite position (each frame is 27px wide)
+    character.style.backgroundPosition = `${-animationFrame * 27}px ${-rowY}px`;
+
+    // Flip horizontally for left direction
+    if (currentDirection === 'left' || (pressedKeys.has("ArrowDown") && pressedKeys.has("ArrowLeft")) || (pressedKeys.has("ArrowUp") && pressedKeys.has("ArrowLeft"))) {
+        character.style.transform = 'scaleX(-1)';
+    } else {
+        character.style.transform = 'scaleX(1)';
+    }
 }
 
 // Game loop for smooth movement
@@ -49,18 +85,22 @@ function gameLoop() {
     if (pressedKeys.has("ArrowUp")) {
         nextTop -= speed;
         moved = true;
+        currentDirection = 'up';
     }
     if (pressedKeys.has("ArrowDown")) {
         nextTop += speed;
         moved = true;
+        currentDirection = 'down';
     }
     if (pressedKeys.has("ArrowLeft")) {
         nextLeft -= speed;
         moved = true;
+        currentDirection = 'left';
     }
     if (pressedKeys.has("ArrowRight")) {
         nextLeft += speed;
         moved = true;
+        currentDirection = 'right';
     }
 
     // Only update position if movement occurred
