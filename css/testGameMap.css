@@ -23,8 +23,8 @@ body {
     background-position: 0px 0px;
     /* Start with top-left sprite */
     position: absolute;
-    top: 100px;
-    left: 100px;
+    top: 150px;
+    left: 150px;
     transition: top 0.05s, left 0.05s;
     image-rendering: pixelated;
 }
@@ -37,4 +37,149 @@ body {
     top: 200px;
     left: 200px;
     transition: top 0.05s, left 0.05s;
+}
+
+/* Glitch Effect */
+.glitch-effect {
+    animation: glitch 0.25s ease-in-out;
+}
+
+.glitch-effect::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 1px,
+            rgba(255, 0, 0, 0.03) 1px,
+            rgba(255, 0, 0, 0.03) 2px);
+    animation: scanlines 0.1s linear infinite;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.glitch-effect::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 20% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+    animation: colorBleed 0.25s ease-in-out;
+    pointer-events: none;
+    z-index: 9998;
+}
+
+/* Game Over Black Overlay */
+.game-over-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 10000;
+    animation: swipeOverlay 0.75s ease-in-out forwards;
+    pointer-events: none;
+    transform: rotate(15deg);
+}
+
+@keyframes swipeOverlay {
+    0% {
+        transform: translateX(-100%) rotate(15deg);
+    }
+
+    100% {
+        transform: translateX(100%) rotate(15deg);
+    }
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+        filter: hue-rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-2px, 1px);
+        filter: hue-rotate(10deg) saturate(1.2);
+    }
+
+    20% {
+        transform: translate(1px, -1px);
+        filter: hue-rotate(-5deg) saturate(0.8);
+    }
+
+    30% {
+        transform: translate(-1px, 2px);
+        filter: hue-rotate(15deg) saturate(1.5);
+    }
+
+    40% {
+        transform: translate(2px, -2px);
+        filter: hue-rotate(-10deg) saturate(0.9);
+    }
+
+    50% {
+        transform: translate(-1px, 1px);
+        filter: hue-rotate(5deg) saturate(1.1);
+    }
+
+    60% {
+        transform: translate(1px, -1px);
+        filter: hue-rotate(-15deg) saturate(0.7);
+    }
+
+    70% {
+        transform: translate(-2px, 2px);
+        filter: hue-rotate(20deg) saturate(1.3);
+    }
+
+    80% {
+        transform: translate(1px, -1px);
+        filter: hue-rotate(-5deg) saturate(0.8);
+    }
+
+    90% {
+        transform: translate(-1px, 1px);
+        filter: hue-rotate(10deg) saturate(1.1);
+    }
+
+    100% {
+        transform: translate(0);
+        filter: hue-rotate(0deg);
+    }
+}
+
+@keyframes scanlines {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(2px);
+    }
+}
+
+@keyframes colorBleed {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
 }

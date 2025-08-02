@@ -6,7 +6,7 @@ const charSize = 27; // Updated to match 3/4 smaller sprite size
 const mapSize = 400;
 const speed = 1;
 
-let position = { top: 100, left: 100 };
+let position = { top: 150, left: 150 };
 let pressedKeys = new Set();
 let animationFrame = 0;
 let animationTimer = 0;
@@ -143,6 +143,36 @@ function gameLoop() {
 
         if (checkCollision(position, charSize, goalPosition, goalSize)) {
             character.style.backgroundColor = "pink";
+            document.body.classList.add('glitch-effect');
+
+
+            // Create and trigger black overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'game-over-overlay';
+            document.body.appendChild(overlay);
+
+            // Remove the glitch effect and overlay after 0.75 seconds
+            setTimeout(() => {
+                document.body.classList.remove('glitch-effect');
+                if (overlay.parentNode) {
+                    overlay.parentNode.removeChild(overlay);
+                }
+            }, 750);
+
+            setTimeout(() => {
+                // Set character to face up
+                currentDirection = 'up';
+                character.style.backgroundPosition = '0px -108px';
+                character.style.transform = 'scaleX(1)';
+                // Reset character position
+                position.top = 360;
+                position.left = 300;
+                character.style.top = `${position.top}px`;
+                character.style.left = `${position.left}px`;
+            }, 500);
+
+
+
         }
     }
 
