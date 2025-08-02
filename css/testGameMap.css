@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #e0e0e0;
+}
+
+#map {
+    width: 400px;
+    height: 400px;
+    border: 4px solid green;
+    position: relative;
+}
+
+#character {
+    width: 27px;
+    height: 27px;
+    background-image: url('../img/SpriteSheet.png');
+    background-size: 245px 245px;
+    /* 3/4 of 328px to maintain proportions */
+    background-position: 0px 0px;
+    /* Start with top-left sprite */
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    transition: top 0.05s, left 0.05s;
+    image-rendering: pixelated;
+}
+
+#goal {
+    width: 50px;
+    height: 50px;
+    background-color: rgb(71, 255, 145);
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    transition: top 0.05s, left 0.05s;
+}
