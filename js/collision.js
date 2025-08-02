@@ -1,10 +1,10 @@
 // Collision detection functions
-function checkCollision(characterPosition, characterSize, goalPosition, goalSize) {
-    const charRect = {
-        left: characterPosition.left,
-        right: characterPosition.left + characterSize,
-        top: characterPosition.top,
-        bottom: characterPosition.top + characterSize
+function checkCollision(playerPosition, playerSize, goalPosition, goalSize) {
+    const playerRect = {
+        left: playerPosition.left,
+        right: playerPosition.left + playerSize,
+        top: playerPosition.top,
+        bottom: playerPosition.top + playerSize
     };
 
     const goalRect = {
@@ -14,10 +14,10 @@ function checkCollision(characterPosition, characterSize, goalPosition, goalSize
         bottom: goalPosition.top + goalSize
     };
 
-    return !(charRect.left > goalRect.right ||
-        charRect.right < goalRect.left ||
-        charRect.top > goalRect.bottom ||
-        charRect.bottom < goalRect.top);
+    return !(playerRect.left > goalRect.right ||
+        playerRect.right < goalRect.left ||
+        playerRect.top > goalRect.bottom ||
+        playerRect.bottom < goalRect.top);
 }
 
 // Export for use in other files

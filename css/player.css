@@ -1,0 +1,12 @@
+#player {
+    width: 27px;
+    height: 27px;
+    background-image: url('../img/SpriteSheet.png');
+    background-size: 245px 245px;
+    background-position: 0px 0px;
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    transition: top 0.05s, left 0.05s;
+    image-rendering: pixelated;
+}

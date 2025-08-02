@@ -1,8 +1,8 @@
-const character = document.getElementById("character");
+const character = document.getElementById("player");
 const map = document.getElementById("map");
 const goal = document.getElementById("goal");
 
-const charSize = 27; // Updated to match 3/4 smaller sprite size
+const playerSize = 27; // Updated to match 3/4 smaller sprite size
 const mapSize = 400;
 const speed = 1;
 
@@ -25,6 +25,11 @@ document.addEventListener("keyup", (e) => {
 
 // Update character sprite animation
 function updateAnimation(isMoving) {
+    // Don't update animation if character is in "facing up" state after collision
+    if (currentDirection === 'up' && !isMoving) {
+        return; // Keep the manual sprite position
+    }
+
     if (isMoving) {
         animationTimer++;
         if (animationTimer >= animationSpeed) {
@@ -128,8 +133,8 @@ function gameLoop() {
         }
 
         // Clamp within map bounds
-        nextTop = Math.max(0, Math.min(mapSize - charSize, nextTop));
-        nextLeft = Math.max(0, Math.min(mapSize - charSize, nextLeft));
+        nextTop = Math.max(0, Math.min(mapSize - playerSize, nextTop));
+        nextLeft = Math.max(0, Math.min(mapSize - playerSize, nextLeft));
 
         position.top = nextTop;
         position.left = nextLeft;
@@ -141,10 +146,9 @@ function gameLoop() {
         const goalPosition = { top: 200, left: 200 }; // goal position from CSS
         const goalSize = 50;
 
-        if (checkCollision(position, charSize, goalPosition, goalSize)) {
+        if (checkCollision(position, playerSize, goalPosition, goalSize)) {
             character.style.backgroundColor = "pink";
             document.body.classList.add('glitch-effect');
-
 
             // Create and trigger black overlay
             const overlay = document.createElement('div');
@@ -160,7 +164,7 @@ function gameLoop() {
             }, 750);
 
             setTimeout(() => {
-                // Set character to face up
+                // Set character to face up and prevent animation override
                 currentDirection = 'up';
                 character.style.backgroundPosition = '0px -108px';
                 character.style.transform = 'scaleX(1)';
@@ -169,10 +173,10 @@ function gameLoop() {
                 position.left = 300;
                 character.style.top = `${position.top}px`;
                 character.style.left = `${position.left}px`;
+                // Reset animation frame to prevent override
+                animationFrame = 0;
+                animationTimer = 0;
             }, 500);
-
-
-
         }
     }
 
@@ -183,5 +187,7 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-// Start the game loop
-gameLoop();
+// Start the game loop when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    gameLoop();
+});

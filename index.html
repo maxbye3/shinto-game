@@ -6,13 +6,27 @@
     <meta name="viewport" content="width=device-width">
     <title>JS Bin</title>
     <link rel="stylesheet" href="./css/testGameMap.css">
+    <link rel="stylesheet" href="./css/player.css">
+    <link rel="stylesheet" href="./css/gameover.css">
 </head>
-<link rel="stylesheet" href="css/testGameMap.css">
 
 <body>
-    <div id="map">
-        <div id="character"></div>
-        <div id="goal"></div>
+    <div class="container">
+        <div class="game-square">
+            <div id="map">
+                <div id="player"></div>
+                <div id="goal"></div>
+            </div>
+        </div>
+        <div class="controls-square">
+            <h2>Controls</h2>
+            <div class="control-info">
+                <p><strong>Movement:</strong></p>
+                <p>Use arrow keys or WASD to move</p>
+                <p><strong>Objective:</strong></p>
+                <p>Reach the green goal!</p>
+            </div>
+        </div>
     </div>
 </body>
 <script src="js/collision.js"></script>
