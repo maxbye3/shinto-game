@@ -3,7 +3,8 @@ const map = document.getElementById("map");
 const goal = document.getElementById("goal");
 
 const playerSize = 27; // Updated to match 3/4 smaller sprite size
-const mapSize = 400;
+const mapWidth = 300;
+const mapHeight = 400;
 const speed = 1;
 
 let position = { top: 150, left: 150 };
@@ -21,6 +22,67 @@ document.addEventListener("keydown", (e) => {
 // Track key releases
 document.addEventListener("keyup", (e) => {
     pressedKeys.delete(e.key);
+});
+
+// Listen for messages from parent page
+window.addEventListener('message', (event) => {
+    if (event.data.type === 'WALK_RIGHT') {
+        if (event.data.action === 'start') {
+            pressedKeys.add('ArrowRight');
+        } else if (event.data.action === 'stop') {
+            pressedKeys.delete('ArrowRight');
+        }
+    } else if (event.data.type === 'WALK_LEFT') {
+        if (event.data.action === 'start') {
+            pressedKeys.add('ArrowLeft');
+        } else if (event.data.action === 'stop') {
+            pressedKeys.delete('ArrowLeft');
+        }
+    } else if (event.data.type === 'WALK_UP') {
+        if (event.data.action === 'start') {
+            pressedKeys.add('ArrowUp');
+        } else if (event.data.action === 'stop') {
+            pressedKeys.delete('ArrowUp');
+        }
+    } else if (event.data.type === 'WALK_DOWN') {
+        if (event.data.action === 'start') {
+            pressedKeys.add('ArrowDown');
+        } else if (event.data.action === 'stop') {
+            pressedKeys.delete('ArrowDown');
+        }
+    } else if (event.data.type === 'WALK_UP_LEFT') {
+        if (event.data.action === 'start') {
+            pressedKeys.add('ArrowUp');
+            pressedKeys.add('ArrowLeft');
+        } else if (event.data.action === 'stop') {
+            pressedKeys.delete('ArrowUp');
+            pressedKeys.delete('ArrowLeft');
+        }
+    } else if (event.data.type === 'WALK_UP_RIGHT') {
+        if (event.data.action === 'start') {
+            pressedKeys.add('ArrowUp');
+            pressedKeys.add('ArrowRight');
+        } else if (event.data.action === 'stop') {
+            pressedKeys.delete('ArrowUp');
+            pressedKeys.delete('ArrowRight');
+        }
+    } else if (event.data.type === 'WALK_DOWN_LEFT') {
+        if (event.data.action === 'start') {
+            pressedKeys.add('ArrowDown');
+            pressedKeys.add('ArrowLeft');
+        } else if (event.data.action === 'stop') {
+            pressedKeys.delete('ArrowDown');
+            pressedKeys.delete('ArrowLeft');
+        }
+    } else if (event.data.type === 'WALK_DOWN_RIGHT') {
+        if (event.data.action === 'start') {
+            pressedKeys.add('ArrowDown');
+            pressedKeys.add('ArrowRight');
+        } else if (event.data.action === 'stop') {
+            pressedKeys.delete('ArrowDown');
+            pressedKeys.delete('ArrowRight');
+        }
+    }
 });
 
 // Update character sprite animation
@@ -133,8 +195,8 @@ function gameLoop() {
         }
 
         // Clamp within map bounds
-        nextTop = Math.max(0, Math.min(mapSize - playerSize, nextTop));
-        nextLeft = Math.max(0, Math.min(mapSize - playerSize, nextLeft));
+        nextTop = Math.max(0, Math.min(mapHeight - playerSize, nextTop));
+        nextLeft = Math.max(0, Math.min(mapWidth - playerSize, nextLeft));
 
         position.top = nextTop;
         position.left = nextLeft;
