@@ -1,0 +1,52 @@
+/* sign.css - Styles for sign collision elements */
+
+@font-face {
+    font-family: 'Exo2-ExtraLight';
+    src: url('../fonts/Exo2-ExtraLight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PressStart2P';
+    src: url('../fonts/PressStart2P.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#blue-square {
+    width: 300px;
+    height: 200px;
+    background-color: blue;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'PressStart2P', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    text-align: center;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+#red-square {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'PressStart2P', Arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+}

@@ -287,6 +287,18 @@ document.addEventListener('DOMContentLoaded', () => {
             stopWalking();
         });
     }
+
+    // Add cycle message button event listener
+    const cycleMessageBtn = document.getElementById('cycle-message-btn');
+    if (cycleMessageBtn) {
+        cycleMessageBtn.addEventListener('click', () => {
+            // Send message to iframe to cycle the Shinto message
+            sendMessageToIframe({
+                type: 'CYCLE_MESSAGE',
+                action: 'cycle'
+            });
+        });
+    }
 });
 
 // Listen for messages from iframe (if needed)

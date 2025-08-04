@@ -1,6 +1,6 @@
 const character = document.getElementById("player");
 const map = document.getElementById("map");
-const goal = document.getElementById("goal");
+const reset = document.getElementById("reset");
 
 const playerSize = 27; // Updated to match 3/4 smaller sprite size
 const mapWidth = 300;
@@ -82,11 +82,23 @@ window.addEventListener('message', (event) => {
             pressedKeys.delete('ArrowDown');
             pressedKeys.delete('ArrowRight');
         }
+    } else if (event.data.type === 'CYCLE_MESSAGE') {
+        if (event.data.action === 'cycle') {
+            // Call the cycle function from sign.js
+            if (typeof cycleShintoMessage === 'function') {
+                cycleShintoMessage();
+            }
+        }
     }
 });
 
 // Update character sprite animation
 function updateAnimation(isMoving) {
+    // Check if character element exists
+    if (!character) {
+        return;
+    }
+
     // Don't update animation if character is in "facing up" state after collision
     if (currentDirection === 'up' && !isMoving) {
         return; // Keep the manual sprite position
@@ -201,15 +213,22 @@ function gameLoop() {
         position.top = nextTop;
         position.left = nextLeft;
 
-        character.style.top = `${position.top}px`;
-        character.style.left = `${position.left}px`;
+        if (character) {
+            character.style.top = `${position.top}px`;
+            character.style.left = `${position.left}px`;
+        }
 
-        // Check for collision with goal
-        const goalPosition = { top: 200, left: 200 }; // goal position from CSS
-        const goalSize = 50;
+        // Check for collision with sign
+        checkSignCollisionInGameLoop(position);
 
-        if (checkCollision(position, playerSize, goalPosition, goalSize)) {
-            character.style.backgroundColor = "pink";
+        // Check for collision with reset
+        const resetPosition = { top: 200, left: 200 }; // reset position from CSS
+        const resetSize = 50;
+
+        if (checkCollision(position, playerSize, resetPosition, resetSize)) {
+            if (character) {
+                character.style.backgroundColor = "pink";
+            }
             document.body.classList.add('glitch-effect');
 
             // Create and trigger black overlay
@@ -228,13 +247,15 @@ function gameLoop() {
             setTimeout(() => {
                 // Set character to face up and prevent animation override
                 currentDirection = 'up';
-                character.style.backgroundPosition = '0px -108px';
-                character.style.transform = 'scaleX(1)';
-                // Reset character position
-                position.top = 360;
-                position.left = 300;
-                character.style.top = `${position.top}px`;
-                character.style.left = `${position.left}px`;
+                if (character) {
+                    character.style.backgroundPosition = '0px -108px';
+                    character.style.transform = 'scaleX(1)';
+                    // Reset character position
+                    position.top = 360;
+                    position.left = 300;
+                    character.style.top = `${position.top}px`;
+                    character.style.left = `${position.left}px`;
+                }
                 // Reset animation frame to prevent override
                 animationFrame = 0;
                 animationTimer = 0;

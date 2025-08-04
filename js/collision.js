@@ -1,5 +1,5 @@
 // Collision detection functions
-function checkCollision(playerPosition, playerSize, goalPosition, goalSize) {
+function checkCollision(playerPosition, playerSize, resetPosition, resetSize) {
     const playerRect = {
         left: playerPosition.left,
         right: playerPosition.left + playerSize,
@@ -7,17 +7,17 @@ function checkCollision(playerPosition, playerSize, goalPosition, goalSize) {
         bottom: playerPosition.top + playerSize
     };
 
-    const goalRect = {
-        left: goalPosition.left,
-        right: goalPosition.left + goalSize,
-        top: goalPosition.top,
-        bottom: goalPosition.top + goalSize
+    const resetRect = {
+        left: resetPosition.left,
+        right: resetPosition.left + resetSize,
+        top: resetPosition.top,
+        bottom: resetPosition.top + resetSize
     };
 
-    return !(playerRect.left > goalRect.right ||
-        playerRect.right < goalRect.left ||
-        playerRect.top > goalRect.bottom ||
-        playerRect.bottom < goalRect.top);
+    return !(playerRect.left > resetRect.right ||
+        playerRect.right < resetRect.left ||
+        playerRect.top > resetRect.bottom ||
+        playerRect.bottom < resetRect.top);
 }
 
 // Export for use in other files

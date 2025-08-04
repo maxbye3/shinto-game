@@ -1,9 +1,9 @@
 // Game over and collision handling
-function handleGoalCollision(character, position, playerSize, currentDirection) {
-    const goalPosition = { top: 200, left: 200 }; // goal position from CSS
-    const goalSize = 50;
+function handleresetCollision(character, position, playerSize, currentDirection) {
+    const resetPosition = { top: 200, left: 200 }; // reset position from CSS
+    const resetSize = 50;
 
-    if (checkCollision(position, playerSize, goalPosition, goalSize)) {
+    if (checkCollision(position, playerSize, resetPosition, resetSize)) {
         // Trigger game over effects
         character.style.backgroundColor = "pink";
         document.body.classList.add('glitch-effect');
