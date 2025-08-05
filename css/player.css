@@ -5,8 +5,9 @@
     background-size: 245px 245px;
     background-position: 0px 0px;
     position: absolute;
-    top: 150px;
-    left: 150px;
+    top: 360px;
+    left: 220px;
+
     transition: top 0.05s, left 0.05s;
     image-rendering: pixelated;
     z-index: 0;

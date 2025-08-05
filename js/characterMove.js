@@ -3,11 +3,11 @@ const map = document.getElementById("map");
 const reset = document.getElementById("reset");
 
 const playerSize = 27; // Updated to match 3/4 smaller sprite size
-const mapWidth = 300;
+const mapWidth = 350;
 const mapHeight = 400;
 const speed = 1;
 
-let position = { top: 150, left: 150 };
+let position = { top: 360, left: 220 };
 let pressedKeys = new Set();
 let animationFrame = 0;
 let animationTimer = 0;
@@ -210,12 +210,16 @@ function gameLoop() {
         nextTop = Math.max(0, Math.min(mapHeight - playerSize, nextTop));
         nextLeft = Math.max(0, Math.min(mapWidth - playerSize, nextLeft));
 
-        position.top = nextTop;
-        position.left = nextLeft;
+        // Check for obstacle collision before updating position
+        const nextPosition = { top: nextTop, left: nextLeft };
+        if (!checkObstacleCollision(nextPosition, playerSize)) {
+            position.top = nextTop;
+            position.left = nextLeft;
 
-        if (character) {
-            character.style.top = `${position.top}px`;
-            character.style.left = `${position.left}px`;
+            if (character) {
+                character.style.top = `${position.top}px`;
+                character.style.left = `${position.left}px`;
+            }
         }
 
         // Check for collision with sign

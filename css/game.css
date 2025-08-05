@@ -4,7 +4,7 @@ body {
 
 #map {
     border: 4px solid green;
-    width: 300px;
+    width: 350px;
     height: 400px;
     position: relative;
     margin: 0;
@@ -13,7 +13,6 @@ body {
 }
 
 #torii {
-
     width: 400px;
     height: 400px;
     background-image: url('../img/torii.png');
@@ -21,7 +20,7 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     position: absolute;
-    top: 0;
+    top: -50px;
     left: 0;
     z-index: 2;
 }
@@ -45,4 +44,22 @@ body {
     bottom: 10px;
     left: 10px;
     z-index: 1;
+}
+
+.obstacle {
+    width: 26px;
+    height: 40px;
+    background-color: red;
+    position: absolute;
+    z-index: 1;
+}
+
+#obstacle1 {
+    top: 214px;
+    left: 122px;
+}
+
+#obstacle2 {
+    top: 214px;
+    left: 243px;
 }

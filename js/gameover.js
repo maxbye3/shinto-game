@@ -29,7 +29,7 @@ function handleresetCollision(character, position, playerSize, currentDirection)
             character.style.transform = 'scaleX(1)';
             // Reset character position
             position.top = 360;
-            position.left = 300;
+            position.left = 220;
             character.style.top = `${position.top}px`;
             character.style.left = `${position.left}px`;
         }, 500);
