@@ -168,131 +168,70 @@ document.addEventListener('DOMContentLoaded', () => {
     // Focus iframe when page loads
     focusIframe();
 
-    if (walkRightBtn) {
-        walkRightBtn.addEventListener('mousedown', () => {
+    // Helper function to add both mouse and touch events
+    function addButtonEvents(button, walkFunction) {
+        if (!button) return;
+
+        // Mouse events
+        button.addEventListener('mousedown', (e) => {
+            e.preventDefault();
             focusIframe();
-            walkRight();
+            walkFunction();
         });
 
-        walkRightBtn.addEventListener('mouseup', () => {
+        button.addEventListener('mouseup', (e) => {
+            e.preventDefault();
             stopWalking();
         });
 
-        walkRightBtn.addEventListener('mouseleave', () => {
+        button.addEventListener('mouseleave', (e) => {
+            e.preventDefault();
+            stopWalking();
+        });
+
+        // Touch events for mobile
+        button.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            focusIframe();
+            walkFunction();
+        });
+
+        button.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            stopWalking();
+        });
+
+        button.addEventListener('touchcancel', (e) => {
+            e.preventDefault();
             stopWalking();
         });
     }
 
-    if (walkLeftBtn) {
-        walkLeftBtn.addEventListener('mousedown', () => {
-            focusIframe();
-            walkLeft();
-        });
-
-        walkLeftBtn.addEventListener('mouseup', () => {
-            stopWalking();
-        });
-
-        walkLeftBtn.addEventListener('mouseleave', () => {
-            stopWalking();
-        });
-    }
-
-    if (walkUpBtn) {
-        walkUpBtn.addEventListener('mousedown', () => {
-            focusIframe();
-            walkUp();
-        });
-
-        walkUpBtn.addEventListener('mouseup', () => {
-            stopWalking();
-        });
-
-        walkUpBtn.addEventListener('mouseleave', () => {
-            stopWalking();
-        });
-    }
-
-    if (walkDownBtn) {
-        walkDownBtn.addEventListener('mousedown', () => {
-            focusIframe();
-            walkDown();
-        });
-
-        walkDownBtn.addEventListener('mouseup', () => {
-            stopWalking();
-        });
-
-        walkDownBtn.addEventListener('mouseleave', () => {
-            stopWalking();
-        });
-    }
-
-    if (walkUpLeftBtn) {
-        walkUpLeftBtn.addEventListener('mousedown', () => {
-            focusIframe();
-            walkUpLeft();
-        });
-
-        walkUpLeftBtn.addEventListener('mouseup', () => {
-            stopWalking();
-        });
-
-        walkUpLeftBtn.addEventListener('mouseleave', () => {
-            stopWalking();
-        });
-    }
-
-    if (walkUpRightBtn) {
-        walkUpRightBtn.addEventListener('mousedown', () => {
-            focusIframe();
-            walkUpRight();
-        });
-
-        walkUpRightBtn.addEventListener('mouseup', () => {
-            stopWalking();
-        });
-
-        walkUpRightBtn.addEventListener('mouseleave', () => {
-            stopWalking();
-        });
-    }
-
-    if (walkDownLeftBtn) {
-        walkDownLeftBtn.addEventListener('mousedown', () => {
-            focusIframe();
-            walkDownLeft();
-        });
-
-        walkDownLeftBtn.addEventListener('mouseup', () => {
-            stopWalking();
-        });
-
-        walkDownLeftBtn.addEventListener('mouseleave', () => {
-            stopWalking();
-        });
-    }
-
-    if (walkDownRightBtn) {
-        walkDownRightBtn.addEventListener('mousedown', () => {
-            focusIframe();
-            walkDownRight();
-        });
-
-        walkDownRightBtn.addEventListener('mouseup', () => {
-            stopWalking();
-        });
-
-        walkDownRightBtn.addEventListener('mouseleave', () => {
-            stopWalking();
-        });
-    }
+    // Add events to all movement buttons
+    addButtonEvents(walkRightBtn, walkRight);
+    addButtonEvents(walkLeftBtn, walkLeft);
+    addButtonEvents(walkUpBtn, walkUp);
+    addButtonEvents(walkDownBtn, walkDown);
+    addButtonEvents(walkUpLeftBtn, walkUpLeft);
+    addButtonEvents(walkUpRightBtn, walkUpRight);
+    addButtonEvents(walkDownLeftBtn, walkDownLeft);
+    addButtonEvents(walkDownRightBtn, walkDownRight);
 
     // Add cycle message button event listener
     const cycleMessageBtn = document.getElementById('cycle-message-btn');
     if (cycleMessageBtn) {
-        cycleMessageBtn.addEventListener('click', () => {
+        cycleMessageBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             // Send message to iframe to cycle the Shinto message
+            sendMessageToIframe({
+                type: 'CYCLE_MESSAGE',
+                action: 'cycle'
+            });
+        });
+
+        // Add touch support for cycle button
+        cycleMessageBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
             sendMessageToIframe({
                 type: 'CYCLE_MESSAGE',
                 action: 'cycle'
