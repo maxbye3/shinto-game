@@ -1,6 +1,6 @@
 const character = document.getElementById("player");
 const map = document.getElementById("map");
-const reset = document.getElementById("reset");
+const conclusion = document.getElementById("conclusion");
 
 const playerSize = 27; // Updated to match 3/4 smaller sprite size
 const mapWidth = 350;
@@ -13,6 +13,7 @@ let animationFrame = 0;
 let animationTimer = 0;
 const animationSpeed = 8; // Frames per animation cycle
 let currentDirection = 'down'; // Track current direction
+let isSuccess = false; // Track if player has collided with success blocks
 
 // Track key presses
 document.addEventListener("keydown", (e) => {
@@ -225,45 +226,61 @@ function gameLoop() {
         // Check for collision with sign
         checkSignCollisionInGameLoop(position);
 
-        // Check for collision with reset
-        const resetPosition = { top: 200, left: 200 }; // reset position from CSS
-        const resetSize = 50;
-
-        if (checkCollision(position, playerSize, resetPosition, resetSize)) {
+        // Check for collision with success blocks
+        if (checkSuccessCollision(position, playerSize)) {
+            isSuccess = true;
             if (character) {
-                character.style.backgroundColor = "pink";
+                character.style.backgroundColor = "green";
             }
-            document.body.classList.add('glitch-effect');
+        }
 
-            // Create and trigger black overlay
-            const overlay = document.createElement('div');
-            overlay.className = 'game-over-overlay';
-            document.body.appendChild(overlay);
+        // Check for collision with conclusion
+        const conclusionPosition = { top: 100, left: 0 }; // conclusion position from CSS
+        const conclusionSize = { width: 350, height: 50 }; // width: 100% of 350px map width, height: 50px
 
-            // Remove the glitch effect and overlay after 0.75 seconds
-            setTimeout(() => {
-                document.body.classList.remove('glitch-effect');
-                if (overlay.parentNode) {
-                    overlay.parentNode.removeChild(overlay);
+        if (checkCollision(position, playerSize, conclusionPosition, conclusionSize)) {
+            if (isSuccess) {
+                // If success achieved, create success squares instead of reset behavior
+                if (typeof createSuccessSquares === 'function') {
+                    createSuccessSquares();
                 }
-            }, 750);
-
-            setTimeout(() => {
-                // Set character to face up and prevent animation override
-                currentDirection = 'up';
+            } else {
+                // Normal reset behavior
                 if (character) {
-                    character.style.backgroundPosition = '0px -108px';
-                    character.style.transform = 'scaleX(1)';
-                    // Reset character position
-                    position.top = 360;
-                    position.left = 300;
-                    character.style.top = `${position.top}px`;
-                    character.style.left = `${position.left}px`;
+                    character.style.backgroundColor = "pink";
                 }
-                // Reset animation frame to prevent override
-                animationFrame = 0;
-                animationTimer = 0;
-            }, 500);
+                document.body.classList.add('glitch-effect');
+
+                // Create and trigger black overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'game-over-overlay';
+                document.body.appendChild(overlay);
+
+                // Remove the glitch effect and overlay after 0.75 seconds
+                setTimeout(() => {
+                    document.body.classList.remove('glitch-effect');
+                    if (overlay.parentNode) {
+                        overlay.parentNode.removeChild(overlay);
+                    }
+                }, 750);
+
+                setTimeout(() => {
+                    // Set character to face up and prevent animation override
+                    currentDirection = 'up';
+                    if (character) {
+                        character.style.backgroundPosition = '0px -108px';
+                        character.style.transform = 'scaleX(1)';
+                        // Reset character position
+                        position.top = 360;
+                        position.left = 300;
+                        character.style.top = `${position.top}px`;
+                        character.style.left = `${position.left}px`;
+                    }
+                    // Reset animation frame to prevent override
+                    animationFrame = 0;
+                    animationTimer = 0;
+                }, 500);
+            }
         }
     }
 

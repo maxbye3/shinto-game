@@ -35,6 +35,10 @@ const shintoMessages = [
     "Praying to the kami is seen less as demanding miracles and more as forming a respectful connection, acknowledging that humans live alongside powerful, mysterious natural forces and ancestors."
 ];
 
+const successMessages = [
+    "You have passed the torii gate.",
+];
+
 let currentMessageIndex = 0;
 
 // Function to create blue square on the map
@@ -74,13 +78,36 @@ function createRedSquare() {
     }
 }
 
+// Function to create success squares (blue and red) with success message
+function createSuccessSquares() {
+    // Create blue square with success message
+    const blueSquare = document.createElement('div');
+    blueSquare.id = 'blue-square';
+    blueSquare.textContent = successMessages[0];
+
+    // Create red square
+    const redSquare = document.createElement('div');
+    redSquare.id = 'red-square';
+    redSquare.textContent = 'nice';
+
+    // Add both squares to the map
+    const map = document.getElementById('map');
+    if (map) {
+        map.appendChild(blueSquare);
+        map.appendChild(redSquare);
+    }
+}
+
 // Track if collision has already been triggered
 let signCollisionTriggered = false;
+// Global flag to track if sign has been touched
+window.signTouched = false;
 
 // Function to check for sign collision in game loop
 function checkSignCollisionInGameLoop(characterPosition) {
     if (!signCollisionTriggered && checkSignCollision(characterPosition, 27)) {
         signCollisionTriggered = true;
+        window.signTouched = true; // Set global flag
         createBlueSquare();
         createRedSquare();
 
@@ -93,5 +120,5 @@ function checkSignCollisionInGameLoop(characterPosition) {
 
 // Export functions for use in other files
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { checkSignCollision, showBlackOverlay, checkSignCollisionInGameLoop };
+    module.exports = { checkSignCollision, showBlackOverlay, checkSignCollisionInGameLoop, createSuccessSquares };
 } 
