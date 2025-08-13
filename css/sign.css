@@ -50,3 +50,13 @@
     font-size: 12px;
     font-weight: normal;
 }
+
+#sign {
+    width: 40px;
+    height: 40px;
+    background-color: yellow;
+    position: absolute;
+    bottom: 31px;
+    left: 228px;
+    z-index: 1;
+}

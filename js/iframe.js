@@ -217,31 +217,122 @@ document.addEventListener('DOMContentLoaded', () => {
     addButtonEvents(walkDownLeftBtn, walkDownLeft);
     addButtonEvents(walkDownRightBtn, walkDownRight);
 
-    // Add cycle message button event listener
+    // Read sign button events
+    const readSignBtn = document.getElementById('read-sign-btn');
+    if (readSignBtn) {
+        const onRead = (e) => {
+            e.preventDefault();
+            // Stop player movement view-side and hide movement buttons
+            hideMovementButtons();
+            showStopReadingButton();
+            // Show the cycle message button
+            const cycleMessageBtn = document.getElementById('cycle-message-btn');
+            if (cycleMessageBtn) {
+                cycleMessageBtn.style.display = 'inline-block';
+            }
+            // Tell iframe to stop player and show content
+            sendMessageToIframe({ type: 'READ_SIGN' });
+        };
+        readSignBtn.addEventListener('click', onRead);
+        readSignBtn.addEventListener('touchstart', onRead);
+    }
+
+    // Cycle message button (manual cycle inside reading mode)
     const cycleMessageBtn = document.getElementById('cycle-message-btn');
     if (cycleMessageBtn) {
-        cycleMessageBtn.addEventListener('click', (e) => {
+        const onCycle = (e) => {
             e.preventDefault();
-            // Send message to iframe to cycle the Shinto message
-            sendMessageToIframe({
-                type: 'CYCLE_MESSAGE',
-                action: 'cycle'
-            });
-        });
-
-        // Add touch support for cycle button
-        cycleMessageBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            sendMessageToIframe({
-                type: 'CYCLE_MESSAGE',
-                action: 'cycle'
-            });
-        });
+            sendMessageToIframe({ type: 'CYCLE_MESSAGE', action: 'cycle' });
+        };
+        cycleMessageBtn.addEventListener('click', onCycle);
+        cycleMessageBtn.addEventListener('touchstart', onCycle);
     }
+
+    // Stop Reading button events
+    const stopReadingBtn = document.getElementById('stop-reading-btn');
+    if (stopReadingBtn) {
+        const onStop = (e) => {
+            e.preventDefault();
+            hideStopReadingButton();
+            showMovementButtons();
+            // Hide the cycle message button
+            const cycleMessageBtn = document.getElementById('cycle-message-btn');
+            if (cycleMessageBtn) {
+                cycleMessageBtn.style.display = 'none';
+            }
+            // Hide the red and blue squares
+            sendMessageToIframe({ type: 'HIDE_SQUARES' });
+            // Allow player to move again in iframe and ignore sign until exit
+            sendMessageToIframe({ type: 'RESUME_MOVEMENT' });
+        };
+        stopReadingBtn.addEventListener('click', onStop);
+        stopReadingBtn.addEventListener('touchstart', onStop);
+    }
+
+
 });
+
+// Function to hide movement buttons
+function hideMovementButtons() {
+	const movementButtons = document.querySelector('.movement-buttons');
+	if (movementButtons) {
+		movementButtons.style.display = 'none';
+	}
+}
+
+// Function to show movement buttons
+function showMovementButtons() {
+	const movementButtons = document.querySelector('.movement-buttons');
+	if (movementButtons) {
+		movementButtons.style.display = 'block';
+	}
+}
+
+// Ensure Cycle Message button is visible
+function showCycleMessageButton() {
+	const cycleMessageBtn = document.getElementById('cycle-message-btn');
+	if (cycleMessageBtn) {
+		cycleMessageBtn.style.display = 'inline-block';
+	}
+}
+
+
+
+// Show/Hide Stop Reading button
+function showStopReadingButton() {
+	const stopBtn = document.getElementById('stop-reading-btn');
+	if (stopBtn) {
+		stopBtn.style.display = 'inline-block';
+	}
+}
+
+function hideStopReadingButton() {
+	const stopBtn = document.getElementById('stop-reading-btn');
+	if (stopBtn) {
+		stopBtn.style.display = 'none';
+	}
+}
 
 // Listen for messages from iframe (if needed)
 window.addEventListener('message', (event) => {
     // Handle any messages from iframe if needed
     console.log('Message from iframe:', event.data);
+    
+    // Check if sign collision occurred
+    if (event.data.type === 'SIGN_COLLISION') {
+        // Show the Read sign button, but do not hide movement buttons yet
+        const readSignBtn = document.getElementById('read-sign-btn');
+        if (readSignBtn) {
+            readSignBtn.style.display = 'inline-block';
+        }
+    }
+    
+    // Check if sign exit occurred
+    if (event.data.type === 'SIGN_EXIT') {
+        // Hide the Read sign button when player moves away
+        const readSignBtn = document.getElementById('read-sign-btn');
+        if (readSignBtn) {
+            readSignBtn.style.display = 'none';
+        }
+    }
 }); 

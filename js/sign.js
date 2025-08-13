@@ -3,7 +3,7 @@ const sign = document.getElementById("sign");
 
 // Sign position and size
 const signSize = 40;
-const signPosition = { top: 350, left: 10 }; // 400 - 40 - 10 = 350 from top
+const signPosition = { top: 329, left: 228 }; // bottom: 31px, left: 228px from CSS, so top = 400 - 40 - 31 = 329
 
 // Function to check collision between character and sign
 function checkSignCollision(characterPosition, characterSize) {
@@ -102,19 +102,64 @@ function createSuccessSquares() {
 let signCollisionTriggered = false;
 // Global flag to track if sign has been touched
 window.signTouched = false;
+// Global flag to track if player should be stopped
+window.stopPlayerMovement = false;
+// When true, do not re-trigger sign collision until player exits sign bounds
+window.ignoreSignCollisionUntilExit = false;
+// Track if we're currently colliding to detect exit
+let wasColliding = false;
 
 // Function to check for sign collision in game loop
 function checkSignCollisionInGameLoop(characterPosition) {
-    if (!signCollisionTriggered && checkSignCollision(characterPosition, 27)) {
-        signCollisionTriggered = true;
-        window.signTouched = true; // Set global flag
-        createBlueSquare();
-        createRedSquare();
+    const isColliding = checkSignCollision(characterPosition, 27);
 
-        // Reset collision flag after 3 seconds
+    // If we're ignoring sign collision until the player exits the bounds
+    if (window.ignoreSignCollisionUntilExit) {
+        if (isColliding) {
+            return; // Still overlapping; do nothing
+        } else {
+            window.ignoreSignCollisionUntilExit = false; // Exited; re-arm collision
+            return;
+        }
+    }
+
+    // Check for collision entry
+    if (!signCollisionTriggered && isColliding) {
+        signCollisionTriggered = true;
+        wasColliding = true;
+        window.signTouched = true; // Set global flag
+        // Don't stop movement yet; just notify parent to show Read sign button
+
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage({
+                type: 'SIGN_COLLISION'
+            }, '*');
+        }
+
         setTimeout(() => {
             signCollisionTriggered = false;
         }, 3000);
+    }
+
+    // Continuously update button visibility based on collision state
+    if (!window.stopPlayerMovement) { // Only when not in reading mode
+        if (isColliding && !wasColliding) {
+            // Just entered collision area
+            wasColliding = true;
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'SIGN_COLLISION'
+                }, '*');
+            }
+        } else if (!isColliding && wasColliding) {
+            // Just exited collision area
+            wasColliding = false;
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'SIGN_EXIT'
+                }, '*');
+            }
+        }
     }
 }
 

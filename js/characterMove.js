@@ -7,7 +7,7 @@ const mapWidth = 350;
 const mapHeight = 400;
 const speed = 1;
 
-let position = { top: 360, left: 220 };
+let position = { top: 360, left: 180 };
 let pressedKeys = new Set();
 let animationFrame = 0;
 let animationTimer = 0;
@@ -90,6 +90,25 @@ window.addEventListener('message', (event) => {
                 cycleShintoMessage();
             }
         }
+    } else if (event.data.type === 'RESUME_MOVEMENT') {
+        // Re-enable player movement and temporarily ignore sign collision until exit
+        window.stopPlayerMovement = false;
+        window.ignoreSignCollisionUntilExit = true;
+    } else if (event.data.type === 'HIDE_SQUARES') {
+        // Hide the red and blue squares
+        const blueSquare = document.getElementById('blue-square');
+        const redSquare = document.getElementById('red-square');
+        if (blueSquare) {
+            blueSquare.remove();
+        }
+        if (redSquare) {
+            redSquare.remove();
+        }
+    } else if (event.data.type === 'READ_SIGN') {
+        // Enter reading mode: stop movement, create squares
+        window.stopPlayerMovement = true;
+        if (typeof createBlueSquare === 'function') createBlueSquare();
+        if (typeof createRedSquare === 'function') createRedSquare();
     }
 });
 
@@ -157,6 +176,15 @@ function updateAnimation(isMoving) {
 
 // Game loop for smooth movement
 function gameLoop() {
+    // Check if player movement should be stopped due to sign collision
+    if (window.stopPlayerMovement) {
+        // Update animation without movement
+        updateAnimation(false);
+        // Continue the game loop but don't process movement
+        requestAnimationFrame(gameLoop);
+        return;
+    }
+    
     let moved = false;
     let nextTop = position.top;
     let nextLeft = position.left;
