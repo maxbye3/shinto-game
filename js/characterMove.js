@@ -95,15 +95,9 @@ window.addEventListener('message', (event) => {
         window.stopPlayerMovement = false;
         window.ignoreSignCollisionUntilExit = true;
     } else if (event.data.type === 'HIDE_SQUARES') {
-        // Hide the red and blue squares
-        const blueSquare = document.getElementById('blue-square');
-        const redSquare = document.getElementById('red-square');
-        if (blueSquare) {
-            blueSquare.remove();
-        }
-        if (redSquare) {
-            redSquare.remove();
-        }
+        // Hide all red and blue squares (in case duplicates exist)
+        const squares = document.querySelectorAll('#blue-square, #red-square');
+        squares.forEach((el) => el.remove());
     } else if (event.data.type === 'READ_SIGN') {
         // Enter reading mode: stop movement, create squares
         window.stopPlayerMovement = true;
@@ -257,9 +251,6 @@ function gameLoop() {
         // Check for collision with success blocks
         if (checkSuccessCollision(position, playerSize)) {
             isSuccess = true;
-            if (character) {
-                character.style.backgroundColor = "green";
-            }
         }
 
         // Check for collision with conclusion
@@ -272,11 +263,7 @@ function gameLoop() {
                 if (typeof createSuccessSquares === 'function') {
                     createSuccessSquares();
                 }
-            } else {
-                // Normal reset behavior
-                if (character) {
-                    character.style.backgroundColor = "pink";
-                }
+            } else {     
                 document.body.classList.add('glitch-effect');
 
                 // Create and trigger black overlay
@@ -299,10 +286,17 @@ function gameLoop() {
                         character.style.backgroundPosition = '0px -108px';
                         character.style.transform = 'scaleX(1)';
                         // Reset character position
-                        position.top = 360;
-                        position.left = 300;
+                        position.top = 335;
+                        position.left = 235;
                         character.style.top = `${position.top}px`;
                         character.style.left = `${position.left}px`;
+                    }
+                    // Enter reading state: stop movement and show sign content
+                    window.stopPlayerMovement = true;
+                    if (typeof createBlueSquare === 'function') createBlueSquare();
+                    if (typeof createRedSquare === 'function') createRedSquare();
+                    if (window.parent && window.parent !== window) {
+                        window.parent.postMessage({ type: 'ENTER_READING' }, '*');
                     }
                     // Reset animation frame to prevent override
                     animationFrame = 0;

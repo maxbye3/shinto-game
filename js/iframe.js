@@ -222,6 +222,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (readSignBtn) {
         const onRead = (e) => {
             e.preventDefault();
+            // Hide the Read sign button immediately to avoid layout shifts
+            const readSignBtn = document.getElementById('read-sign-btn');
+            if (readSignBtn) {
+                readSignBtn.style.display = 'none';
+            }
             // Stop player movement view-side and hide movement buttons
             hideMovementButtons();
             showStopReadingButton();
@@ -324,6 +329,16 @@ window.addEventListener('message', (event) => {
         const readSignBtn = document.getElementById('read-sign-btn');
         if (readSignBtn) {
             readSignBtn.style.display = 'inline-block';
+        }
+    }
+
+    // Enter reading UI (used by gameover)
+    if (event.data.type === 'ENTER_READING') {
+        hideMovementButtons();
+        showStopReadingButton();
+        const cycleMessageBtn = document.getElementById('cycle-message-btn');
+        if (cycleMessageBtn) {
+            cycleMessageBtn.style.display = 'inline-block';
         }
     }
     

@@ -26,10 +26,12 @@ function checkCollision(playerPosition, playerSize, conclusionPosition, conclusi
 
 // Obstacle collision detection
 function checkObstacleCollision(playerPosition, playerSize) {
-    const obstacles = [
-        { top: 214, left: 122, width: 26, height: 40 }, // obstacle1
-        { top: 214, left: 243, width: 26, height: 40 }  // obstacle2
-    ];
+    // Dynamically find all elements with the "obstacle" class
+    const obstacleElements = document.querySelectorAll('.obstacle');
+    
+    if (obstacleElements.length === 0) {
+        return false; // No obstacles found
+    }
 
     const playerRect = {
         left: playerPosition.left,
@@ -38,12 +40,16 @@ function checkObstacleCollision(playerPosition, playerSize) {
         bottom: playerPosition.top + playerSize
     };
 
-    for (let obstacle of obstacles) {
+    for (let obstacleElement of obstacleElements) {
+        const rect = obstacleElement.getBoundingClientRect();
+        const mapRect = document.getElementById('map').getBoundingClientRect();
+        
+        // Calculate obstacle position relative to the map
         const obstacleRect = {
-            left: obstacle.left,
-            right: obstacle.left + obstacle.width,
-            top: obstacle.top,
-            bottom: obstacle.top + obstacle.height
+            left: rect.left - mapRect.left,
+            right: rect.right - mapRect.left,
+            top: rect.top - mapRect.top,
+            bottom: rect.bottom - mapRect.top
         };
 
         // Check if player collides with obstacle

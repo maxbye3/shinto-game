@@ -5,7 +5,6 @@ function handleresetCollision(character, position, playerSize, currentDirection)
 
     if (checkCollision(position, playerSize, resetPosition, resetSize)) {
         // Trigger game over effects
-        character.style.backgroundColor = "pink";
         document.body.classList.add('glitch-effect');
 
         // Create and trigger black overlay

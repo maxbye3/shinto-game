@@ -36,13 +36,17 @@ const shintoMessages = [
 ];
 
 const successMessages = [
-    "You have passed the torii gate.",
+    "Congrats! </br> The center of the gate is reserved for the kami. </br></br>  You’ve reached the rank of: </br></br> “incompetent gaijin”",
 ];
 
 let currentMessageIndex = 0;
 
 // Function to create blue square on the map
 function createBlueSquare() {
+    // Remove existing instance to prevent duplicates
+    const existingBlue = document.getElementById('blue-square');
+    if (existingBlue) existingBlue.remove();
+
     // Create blue square element
     const blueSquare = document.createElement('div');
     blueSquare.id = 'blue-square';
@@ -66,6 +70,10 @@ function cycleShintoMessage() {
 
 // Function to create red square on the map
 function createRedSquare() {
+    // Remove existing instance to prevent duplicates
+    const existingRed = document.getElementById('red-square');
+    if (existingRed) existingRed.remove();
+
     // Create red square element
     const redSquare = document.createElement('div');
     redSquare.id = 'red-square';
@@ -83,7 +91,7 @@ function createSuccessSquares() {
     // Create blue square with success message
     const blueSquare = document.createElement('div');
     blueSquare.id = 'blue-square';
-    blueSquare.textContent = successMessages[0];
+    blueSquare.innerHTML = successMessages[0];
 
     // Create red square
     const redSquare = document.createElement('div');
