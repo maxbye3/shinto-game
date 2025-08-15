@@ -31,8 +31,9 @@ function checkSignCollision(characterPosition, characterSize) {
 const shintoMessages = [
     "Pass through the torii gate, but remember that the middle is reserved for the kami.",
     "In Shinto, the traditional religion of Japan, kami (神) are sacred spirits, forces, or deities that inhabit all things in nature and beyond.",
-    "Kami are believed to dwell in natural phenomena like mountains, rivers, rocks, trees, and even in human beings, ancestors, or extraordinary people. They can be grand and powerful like Amaterasu (the sun goddess), or humble and local, like the kami of a particular tree or stream near a village shrine.",
-    "Praying to the kami is seen less as demanding miracles and more as forming a respectful connection, acknowledging that humans live alongside powerful, mysterious natural forces and ancestors."
+    "Kami are believed to dwell in natural phenomena like mountains, rivers, rocks, trees, and even in human beings, ancestors, or extraordinary people.",
+    "They can be grand and powerful like Amaterasu (the sun goddess), or humble and local, like the kami of a particular tree or stream near a village shrine.",
+    "Praying to the kami is seen less as demanding miracles and more as forming a respectful connection, acknowledging that humans live alongside powerful, mysterious natural forces."
 ];
 
 const successMessages = [
