@@ -28,7 +28,7 @@ function checkCollision(playerPosition, playerSize, conclusionPosition, conclusi
 function checkObstacleCollision(playerPosition, playerSize) {
     // Dynamically find all elements with the "obstacle" class
     const obstacleElements = document.querySelectorAll('.obstacle');
-    
+
     if (obstacleElements.length === 0) {
         return false; // No obstacles found
     }
@@ -43,7 +43,7 @@ function checkObstacleCollision(playerPosition, playerSize) {
     for (let obstacleElement of obstacleElements) {
         const rect = obstacleElement.getBoundingClientRect();
         const mapRect = document.getElementById('map').getBoundingClientRect();
-        
+
         // Calculate obstacle position relative to the map
         const obstacleRect = {
             left: rect.left - mapRect.left,
@@ -67,8 +67,8 @@ function checkObstacleCollision(playerPosition, playerSize) {
 // Success collision detection
 function checkSuccessCollision(playerPosition, playerSize) {
     const successBlocks = [
-        { top: 220, left: 145, width: 30, height: 30 }, // success1
-        { top: 220, left: 215, width: 30, height: 30 }  // success2
+        { top: 220, left: 135, width: 30, height: 30 }, // success1
+        { top: 220, left: 225, width: 30, height: 30 }  // success2
     ];
 
     const playerRect = {
@@ -98,7 +98,32 @@ function checkSuccessCollision(playerPosition, playerSize) {
     return false; // No collision
 }
 
+// Failure collision detection
+function checkFailureCollision(playerPosition, playerSize) {
+    const failureBlock = { top: 220, left: 180, width: 30, height: 30 }; // failureCollision
+
+    const playerRect = {
+        left: playerPosition.left,
+        right: playerPosition.left + playerSize,
+        top: playerPosition.top,
+        bottom: playerPosition.top + playerSize
+    };
+
+    const failureRect = {
+        left: failureBlock.left,
+        right: failureBlock.left + failureBlock.width,
+        top: failureBlock.top,
+        bottom: failureBlock.top + failureBlock.height
+    };
+
+    // Check if player collides with failure block
+    return !(playerRect.left > failureRect.right ||
+        playerRect.right < failureRect.left ||
+        playerRect.top > failureRect.bottom ||
+        playerRect.bottom < failureRect.top);
+}
+
 // Export for use in other files
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { checkCollision, checkObstacleCollision, checkSuccessCollision };
+    module.exports = { checkCollision, checkObstacleCollision, checkSuccessCollision, checkFailureCollision };
 } 

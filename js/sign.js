@@ -3,7 +3,7 @@ const sign = document.getElementById("sign");
 
 // Sign position and size
 const signSize = 40;
-const signPosition = { top: 329, left: 228 }; // bottom: 31px, left: 228px from CSS, so top = 400 - 40 - 31 = 329
+const signPosition = { top: 298, left: 235 }; // matches CSS position
 
 // Function to check collision between character and sign
 function checkSignCollision(characterPosition, characterSize) {

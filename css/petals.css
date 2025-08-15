@@ -1,0 +1,98 @@
+/* petals.css - Styles for cherry petal particles */
+#cherry {
+    width: 105px;
+    height: 105px;
+    background-image: url(../img/cherry.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    right: 0px;
+}
+
+#cherry-head {
+    width: 105px;
+    height: 105px;
+    background-image: url(../img/cherry-head.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    z-index: 4;
+    top: -20px;
+    right: 0px;
+}
+
+/* Cherry petal container */
+.petal-container {
+    position: absolute;
+    top: -73px;
+    right: 10px;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Cherry petal particles */
+.cherry-petal {
+    width: 6px;
+    height: 6px;
+    background-color: pink;
+    position: absolute;
+    z-index: 2;
+    /* Removed border-radius: 50% to make petals square */
+}
+
+/* Different flow directions - removed right-flowing */
+.cherry-petal.flow-left-down {
+    animation: float-left-down 4s infinite linear;
+}
+
+.cherry-petal.flow-straight-down {
+    animation: float-straight-down 3.5s infinite linear;
+}
+
+.cherry-petal.flow-diagonal-down {
+    animation: float-diagonal-down 4.2s infinite linear;
+}
+
+@keyframes float-left-down {
+    0% {
+        transform: translate(0, -20px) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-200px, 200px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes float-straight-down {
+    0% {
+        transform: translate(0, -20px) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(0, 200px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes float-diagonal-down {
+    0% {
+        transform: translate(0, -20px) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-100px, 200px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Petal positioning and animation delays are now handled dynamically by blossom.js */

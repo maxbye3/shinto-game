@@ -7,8 +7,7 @@
     position: absolute;
     top: 360px;
     left: 180px;
-
     transition: top 0.05s, left 0.05s;
     image-rendering: pixelated;
-    z-index: 0;
+    z-index: 1;
 }

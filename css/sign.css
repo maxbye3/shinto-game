@@ -54,9 +54,15 @@
 #sign {
     width: 40px;
     height: 40px;
-    background-color: yellow;
+    /* background-color: yellow; */
+    /* border: 2px solid red; */
+    background-image: url(../img/sign.png);
+    background-size: 40px;
+    background-repeat: no-repeat;
+    background-position: top;
     position: absolute;
-    bottom: 31px;
-    left: 228px;
-    z-index: 1;
+    top: 298px;
+    left: 235px;
+    z-index: 0;
+
 }

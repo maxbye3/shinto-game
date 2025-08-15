@@ -178,7 +178,7 @@ function gameLoop() {
         requestAnimationFrame(gameLoop);
         return;
     }
-    
+
     let moved = false;
     let nextTop = position.top;
     let nextLeft = position.left;
@@ -253,6 +253,11 @@ function gameLoop() {
             isSuccess = true;
         }
 
+        // Check for collision with failure block
+        if (checkFailureCollision(position, playerSize)) {
+            isSuccess = false;
+        }
+
         // Check for collision with conclusion
         const conclusionPosition = { top: 100, left: 0 }; // conclusion position from CSS
         const conclusionSize = { width: 350, height: 50 }; // width: 100% of 350px map width, height: 50px
@@ -263,7 +268,7 @@ function gameLoop() {
                 if (typeof createSuccessSquares === 'function') {
                     createSuccessSquares();
                 }
-            } else {     
+            } else {
                 document.body.classList.add('glitch-effect');
 
                 // Create and trigger black overlay

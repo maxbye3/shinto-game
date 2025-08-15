@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/gameover.css">
     <link rel="stylesheet" href="./css/game.css">
     <link rel="stylesheet" href="./css/sign.css">
+    <link rel="stylesheet" href="css/petals.css">
 </head>
 
 <body>
@@ -16,7 +17,7 @@
         <div id="torii"></div>
         <div id="player"></div>
         <div id="conclusion"></div>
-        <div id="sign" hidden></div>
+        <div id="sign"></div>
         <div id="obstacle1" class="obstacle"></div>
         <div id="obstacle2" class="obstacle"></div>
         <div id="obstacle3" class="obstacle"></div>
@@ -24,8 +25,15 @@
         <div id="obstacle5" class="obstacle"></div>
         <div id="obstacle6" class="obstacle"></div>
         <div id="obstacle7" class="obstacle"></div>
-        <div id="success1" class="success" hidden></div>
-        <div id="success2" class="success" hidden></div>
+        <div id="obstacle8" class="obstacle"></div>
+        <div id="success1" class="success"></div>
+        <div id="success2" class="success"></div>
+        <div id="failureCollision"></div>
+        <div id="cherry"></div>
+        <div id="cherry-head"></div>
+        <div class="petal-container">
+            <!-- Petals will be generated dynamically by blossom.js -->
+        </div>
     </div>
 
 
@@ -33,5 +41,6 @@
 <script src="js/collision.js"></script>
 <script src="js/characterMove.js"></script>
 <script src="js/sign.js"></script>
+<script src="js/blossom.js"></script>
 
 </html>
