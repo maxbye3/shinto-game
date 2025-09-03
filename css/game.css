@@ -4,7 +4,7 @@ body {
 
 #map {
     width: 400px;
-    height: 400px;
+    height: 700px;
     position: relative;
     margin: 0;
     padding: 0;
@@ -51,53 +51,52 @@ body {
 
 #obstacle1 {
     top: 214px;
-    left: 122px;
+    left: 118px;
 }
 
 #obstacle2 {
     top: 214px;
-    left: 243px;
+    left: 248px;
 }
 
 #obstacle3 {
     width: 50px;
     height: 380px;
-    left: 15px;
 }
 
 #obstacle4 {
     width: 50px;
     height: 205px;
-    top: 176px;
-    left: 56px;
+    top: 225px;
+    left: 49px;
 }
 
 #obstacle5 {
-    width: 30px;
-    height: 349px;
+    width: 17px;
+    height: 357px;
     top: 31px;
     right: 0px;
 }
 
 #obstacle6 {
     width: 50px;
-    height: 245px;
-    top: 30px;
-    right: 17px;
+    height: 270px;
+    top: 68px;
+    right: 5px;
 }
 
 #obstacle7 {
     width: 50px;
     height: 64px;
-    top: 317px;
-    right: 17px;
+    top: 387px;
+    right: 5px;
 }
 
 #obstacle8 {
     width: 28px;
-    height: 12px;
-    top: 309px;
-    right: 135px;
+    height: 11px;
+    top: 307px;
+    right: 130px;
 }
 
 .success {

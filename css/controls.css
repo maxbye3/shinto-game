@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap');
+
 @font-face {
     font-family: 'Exo2-ExtraLight';
     src: url('../fonts/Exo2-ExtraLight.ttf') format('truetype');
@@ -47,31 +49,213 @@
     background-color: #3d8b40;
 }
 
-.movement-buttons {
+/* Sleek read sign button */
+#read-sign-btn {
+    background-color: #333;
+    border: 2px solid #666;
+    color: #ccc;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 500;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    margin: 20px auto;
+    width: auto;
+    letter-spacing: 2px;
+    min-width: 140px;
 }
 
-.diagonal-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+#read-sign-btn:hover {
+    background-color: #555;
+    color: white;
+    border-color: #888;
 }
 
-.horizontal-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+#read-sign-btn:active {
+    background-color: #222;
+    color: white;
+    transform: scale(0.95);
 }
 
-.diagonal-btn {
-    width: 50px;
-    height: 50px;
-    padding: 10px;
-    font-size: 20px;
-    font-weight: bold;
+/* Style other control buttons to match */
+#cycle-message-btn,
+#stop-reading-btn {
+    background-color: #333;
+    border: 2px solid #666;
+    color: #ccc;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.2s;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    margin: 8px auto;
+    width: auto;
+    min-width: 140px;
+    display: block;
+}
+
+#cycle-message-btn:hover,
+#stop-reading-btn:hover {
+    background-color: #555;
+    color: white;
+    border-color: #888;
+}
+
+#cycle-message-btn:active,
+#stop-reading-btn:active {
+    background-color: #222;
+    color: white;
+    transform: scale(0.95);
+}
+
+.dpad-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.dpad {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    display: grid;
+    grid-template-columns: 60px 60px 60px;
+    grid-template-rows: 60px 60px 60px;
+}
+
+.dpad-btn {
+    background-color: #333;
+    border: 2px solid #666;
+    color: #ccc;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.dpad-btn:hover {
+    background-color: #555;
+    color: white;
+}
+
+.dpad-btn:active,
+.dpad-btn.pressed {
+    background-color: #222 !important;
+    color: white !important;
+    transform: scale(0.95);
+}
+
+.dpad-up {
+    grid-column: 2;
+    grid-row: 1;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 0;
+}
+
+.dpad-left {
+    grid-column: 1;
+    grid-row: 2;
+    border-radius: 8px 0 0 8px;
+    border-right: 0;
+}
+
+.dpad-right {
+    grid-column: 3;
+    grid-row: 2;
+    border-radius: 0 8px 8px 0;
+    border-left: 0;
+}
+
+.dpad-down {
+    grid-column: 2;
+    grid-row: 3;
+    border-radius: 0 0 8px 8px;
+    border-top: 0;
+}
+
+/* Create the cross shape by adding a center connector */
+.dpad::before {
+    content: '';
+    position: absolute;
+    top: 60px;
+    left: 60px;
+    width: 60px;
+    height: 60px;
+    background-color: #333;
+    border: 2px solid #333;
+    z-index: -1;
+}
+
+/* Diagonal triangle buttons */
+.dpad-diagonal {
+    position: absolute;
+    font-size: 16px;
+    color: #666;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.dpad-diagonal:hover {
+    color: #999;
+}
+
+.dpad-diagonal:active,
+.dpad-diagonal.pressed {
+    color: #ccc !important;
+    transform: scale(0.9);
+}
+
+
+
+.dpad-diagonal-tl {
+    top: 15px;
+    left: 15px;
+}
+
+.dpad-diagonal-tr {
+    top: 15px;
+    right: 15px;
+}
+
+.dpad-diagonal-bl {
+    bottom: 15px;
+    left: 15px;
+}
+
+.dpad-diagonal-br {
+    bottom: 15px;
+    right: 15px;
 }
 
 /* Mobile-specific styles */
@@ -86,7 +270,7 @@
         overflow: visible;
         position: relative;
     }
-    
+
     .control-btn {
         padding: 20px 40px;
         font-size: 18px;
@@ -94,21 +278,47 @@
         min-height: 44px;
         min-width: 44px;
     }
-    
-    .diagonal-btn {
-        width: 60px;
-        height: 60px;
-        padding: 15px;
-        font-size: 24px;
+
+    .dpad {
+        width: 150px;
+        height: 150px;
+        grid-template-columns: 50px 50px 50px;
+        grid-template-rows: 50px 50px 50px;
     }
-    
-    .movement-buttons {
-        gap: 15px;
+
+    .dpad::before {
+        top: 50px;
+        left: 50px;
+        width: 50px;
+        height: 50px;
     }
-    
-    .diagonal-row,
-    .horizontal-row {
-        gap: 15px;
+
+    .dpad-btn {
+        font-size: 20px;
+    }
+
+    .dpad-diagonal {
+        font-size: 14px;
+    }
+
+    .dpad-diagonal-tl {
+        top: 12px;
+        left: 12px;
+    }
+
+    .dpad-diagonal-tr {
+        top: 12px;
+        right: 12px;
+    }
+
+    .dpad-diagonal-bl {
+        bottom: 12px;
+        left: 12px;
+    }
+
+    .dpad-diagonal-br {
+        bottom: 12px;
+        right: 12px;
     }
 }
 
@@ -121,7 +331,7 @@
         overflow: visible;
         position: relative;
     }
-    
+
     .control-btn {
         padding: 18px 35px;
         font-size: 16px;
@@ -130,26 +340,53 @@
         min-width: 44px;
         touch-action: manipulation;
     }
-    
+
     #read-sign-btn {
-        width: 100%;
-        max-width: 280px;
-        margin: 10px auto;
+        padding: 15px 30px;
+        font-size: 18px;
+        min-width: 160px;
+        margin: 15px auto;
     }
-    
-    .diagonal-btn {
-        width: 55px;
-        height: 55px;
-        padding: 12px;
-        font-size: 22px;
+
+    .dpad {
+        width: 120px;
+        height: 120px;
+        grid-template-columns: 40px 40px 40px;
+        grid-template-rows: 40px 40px 40px;
     }
-    
-    .movement-buttons {
-        gap: 12px;
+
+    .dpad::before {
+        top: 40px;
+        left: 40px;
+        width: 40px;
+        height: 40px;
     }
-    
-    .diagonal-row,
-    .horizontal-row {
-        gap: 12px;
+
+    .dpad-btn {
+        font-size: 18px;
+    }
+
+    .dpad-diagonal {
+        font-size: 12px;
+    }
+
+    .dpad-diagonal-tl {
+        top: 10px;
+        left: 10px;
+    }
+
+    .dpad-diagonal-tr {
+        top: 10px;
+        right: 10px;
+    }
+
+    .dpad-diagonal-bl {
+        bottom: 10px;
+        left: 10px;
+    }
+
+    .dpad-diagonal-br {
+        bottom: 10px;
+        right: 10px;
     }
 }

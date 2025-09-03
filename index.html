@@ -17,20 +17,16 @@
         <div class="controls-square">
 
             <div class="control-info">
-                <div class="movement-buttons">
-                    <div class="diagonal-row">
-                        <button id="walk-up-left-btn" class="control-btn diagonal-btn">↖</button>
-                        <button id="walk-up-btn" class="control-btn">Walk Up</button>
-                        <button id="walk-up-right-btn" class="control-btn diagonal-btn">↗</button>
-                    </div>
-                    <div class="horizontal-row">
-                        <button id="walk-left-btn" class="control-btn">Walk Left</button>
-                        <button id="walk-right-btn" class="control-btn">Walk Right</button>
-                    </div>
-                    <div class="diagonal-row">
-                        <button id="walk-down-left-btn" class="control-btn diagonal-btn">↙</button>
-                        <button id="walk-down-btn" class="control-btn">Walk Down</button>
-                        <button id="walk-down-right-btn" class="control-btn diagonal-btn">↘</button>
+                <div class="dpad-container">
+                    <div class="dpad">
+                        <button id="walk-up-btn" class="dpad-btn dpad-up">△</button>
+                        <button id="walk-left-btn" class="dpad-btn dpad-left">◁</button>
+                        <button id="walk-right-btn" class="dpad-btn dpad-right">▷</button>
+                        <button id="walk-down-btn" class="dpad-btn dpad-down">▽</button>
+                        <button id="walk-up-left-btn" class="dpad-diagonal dpad-diagonal-tl">◤</button>
+                        <button id="walk-up-right-btn" class="dpad-diagonal dpad-diagonal-tr">◥</button>
+                        <button id="walk-down-left-btn" class="dpad-diagonal dpad-diagonal-bl">◣</button>
+                        <button id="walk-down-right-btn" class="dpad-diagonal dpad-diagonal-br">◢</button>
                     </div>
                 </div>
                 <button id="read-sign-btn" class="control-btn" style="display: none;">
