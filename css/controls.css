@@ -23,6 +23,15 @@
     position: relative;
 }
 
+.control-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+}
+
 .control-btn {
     background-color: #4CAF50;
     border: none;
@@ -54,7 +63,7 @@
     background-color: #333;
     border: 2px solid #666;
     color: #ccc;
-    padding: 12px 24px;
+    padding: 12px 4px;
     border-radius: 8px;
     font-family: 'Orbitron', monospace;
     font-size: 16px;
@@ -69,7 +78,7 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    margin: 20px auto;
+    margin: 0;
     width: auto;
     letter-spacing: 2px;
     min-width: 140px;
@@ -85,6 +94,14 @@
     background-color: #222;
     color: white;
     transform: scale(0.95);
+}
+
+/* Container for reading buttons to stack them vertically on desktop */
+.reading-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
 }
 
 /* Style other control buttons to match */
@@ -104,7 +121,7 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    margin: 8px auto;
+    margin: 0;
     width: auto;
     min-width: 140px;
     display: block;
@@ -261,20 +278,29 @@
 /* Mobile-specific styles */
 @media (max-width: 875px) {
     .controls-square {
-        width: 90vw;
-        max-width: 350px;
+        bottom: -10px;
+        width: 100vw;
         height: auto;
-        min-height: 250px;
         padding: 10px;
         margin: 5px auto;
         overflow: visible;
-        position: relative;
+        position: fixed;
+        height: 140px;
+    }
+
+    .control-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        width: 100%;
     }
 
     .control-btn {
-        padding: 20px 40px;
-        font-size: 18px;
-        margin: 6px 3px;
+        padding: 15px 25px;
+        font-size: 16px;
+        margin: 0;
         min-height: 44px;
         min-width: 44px;
     }
@@ -322,127 +348,27 @@
     }
 
     .dpad-container {
-        margin: 10px 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .controls-square {
-        width: 95vw;
-        max-width: 280px;
-        padding: 8px;
-        margin: 3px auto;
-        overflow: visible;
-        position: relative;
+        margin: 0;
     }
 
-    .control-btn {
-        padding: 18px 35px;
-        font-size: 16px;
-        margin: 5px 2px;
-        min-height: 44px;
-        min-width: 44px;
-        touch-action: manipulation;
+    /* Reading buttons display horizontally on mobile */
+    .reading-buttons {
+        flex-direction: row;
+        gap: 15px;
     }
 
     #read-sign-btn {
-        padding: 10px 20px;
-        font-size: 16px;
-        min-width: 140px;
-        margin: 10px auto;
-    }
-
-    #cycle-message-btn,
-    #stop-reading-btn {
-        padding: 10px 20px;
-        font-size: 16px;
-        min-width: 140px;
-        margin: 5px auto;
-    }
-
-    .dpad {
-        width: 120px;
-        height: 120px;
-        grid-template-columns: 40px 40px 40px;
-        grid-template-rows: 40px 40px 40px;
-    }
-
-    .dpad::before {
-        top: 40px;
-        left: 40px;
-        width: 40px;
-        height: 40px;
-    }
-
-    .dpad-btn {
-        font-size: 18px;
-    }
-
-    .dpad-diagonal {
-        font-size: 12px;
-    }
-
-    .dpad-diagonal-tl {
-        top: 10px;
-        left: 10px;
-    }
-
-    .dpad-diagonal-tr {
-        top: 10px;
-        right: 10px;
-    }
-
-    .dpad-diagonal-bl {
-        bottom: 10px;
-        left: 10px;
-    }
-
-    .dpad-diagonal-br {
-        bottom: 10px;
-        right: 10px;
-    }
-
-    .dpad-container {
-        margin: 8px 0;
+        margin: 0;
+        min-width: 120px;
+        padding: 12px 20px;
+        font-size: 14px;
     }
 }
 
 /* iPhone SE and very small screens */
 @media (max-width: 375px) {
-    .controls-square {
-        max-width: 100vw;
-        padding: 5px;
-        margin: 2px auto;
-        overflow: visible;
-        align-items: baseline;
-        flex-direction: row;
-        min-height: 10px;
-        bottom: 0px;
-        position: fixed;
-    }
-
-    .control-btn {
-        padding: 12px 25px;
-        font-size: 14px;
-        margin: 3px 1px;
-        min-height: 44px;
-        min-width: 44px;
-        touch-action: manipulation;
-    }
-
-    #read-sign-btn {
-        padding: 8px 16px;
-        font-size: 14px;
-        min-width: 120px;
-        margin: 5px auto;
-    }
-
-    #cycle-message-btn,
-    #stop-reading-btn {
-        padding: 8px 16px;
-        font-size: 14px;
-        min-width: 120px;
-        margin: 3px auto;
+    .control-info {
+        gap: 15px;
     }
 
     .dpad {
@@ -488,6 +414,12 @@
     }
 
     .dpad-container {
-        margin: 5px 0;
+        margin: 0;
+    }
+
+    #read-sign-btn {
+        min-width: 100px;
+        padding: 10px 15px;
+        font-size: 12px;
     }
 }

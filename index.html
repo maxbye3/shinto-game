@@ -12,7 +12,7 @@
 <body>
     <div class="container">
         <div class="game-square">
-            <iframe src="game.html" width="100%" height="100%"></iframe>
+            <iframe src="game.html" width="100%" height="200px"></iframe>
         </div>
         <div class="controls-square">
 
@@ -29,12 +29,16 @@
                         <button id="walk-down-right-btn" class="dpad-diagonal dpad-diagonal-br">◢</button>
                     </div>
                 </div>
-                <button id="read-sign-btn" class="control-btn" style="display: none;">
+                <button id="read-sign-btn" class="control-btn" style="opacity: 0; pointer-events: none;">
                     <img src="img/sign.png" alt="Sign" class="sign-icon">
                     Read sign</button>
-                <button id="cycle-message-btn" class="control-btn" style="display: none;">Learn more about the
-                    kami</button>
-                <button id="stop-reading-btn" class="control-btn" style="display: none;">Stop Reading</button>
+                <div class="reading-buttons">
+                    <button id="cycle-message-btn" class="control-btn" style="display: none;">Learn more
+                        about the
+                        kami</button>
+                    <button id="stop-reading-btn" class="control-btn" style="display: none;">Stop
+                        Reading</button>
+                </div>
             </div>
         </div>
     </div>

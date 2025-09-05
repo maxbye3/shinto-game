@@ -222,10 +222,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (readSignBtn) {
         const onRead = (e) => {
             e.preventDefault();
+            console.log('Start reading button clicked');
+            // Shrink controls square height on mobile only
+            if (window.innerWidth <= 875) {
+                const controlsSquare = document.querySelector('.controls-square');
+                if (controlsSquare) {
+                    controlsSquare.style.height = '60px';
+                }
+            }
             // Hide the Read sign button immediately to avoid layout shifts
             const readSignBtn = document.getElementById('read-sign-btn');
             if (readSignBtn) {
                 readSignBtn.style.display = 'none';
+                readSignBtn.style.pointerEvents = 'none';
             }
             // Stop player movement view-side and hide movement buttons
             hideMovementButtons();
@@ -233,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Show the cycle message button
             const cycleMessageBtn = document.getElementById('cycle-message-btn');
             if (cycleMessageBtn) {
-                cycleMessageBtn.style.display = 'inline-block';
+                cycleMessageBtn.style.display = 'block';
             }
             // Tell iframe to stop player and show content
             sendMessageToIframe({ type: 'READ_SIGN' });
@@ -258,8 +267,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (stopReadingBtn) {
         const onStop = (e) => {
             e.preventDefault();
+            console.log('Stop reading button clicked');
+            // Restore controls square height on mobile only
+            if (window.innerWidth <= 875) {
+                const controlsSquare = document.querySelector('.controls-square');
+                if (controlsSquare) {
+                    controlsSquare.style.height = '140px';
+                }
+            }
             hideStopReadingButton();
             showMovementButtons();
+            // Show the Read sign button again
+            const readSignBtn = document.getElementById('read-sign-btn');
+            if (readSignBtn) {
+                readSignBtn.style.display = 'block';
+                readSignBtn.style.pointerEvents = 'auto';
+            }
             // Hide the cycle message button
             const cycleMessageBtn = document.getElementById('cycle-message-btn');
             if (cycleMessageBtn) {
@@ -279,56 +302,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Function to hide movement buttons
 function hideMovementButtons() {
-	const movementButtons = document.querySelector('.movement-buttons');
-	if (movementButtons) {
-		movementButtons.style.display = 'none';
-	}
+    const dpadContainer = document.querySelector('.dpad-container');
+    if (dpadContainer) {
+        dpadContainer.style.display = 'none';
+    }
 }
 
 // Function to show movement buttons
 function showMovementButtons() {
-	const movementButtons = document.querySelector('.movement-buttons');
-	if (movementButtons) {
-		movementButtons.style.display = 'block';
-	}
+    const dpadContainer = document.querySelector('.dpad-container');
+    if (dpadContainer) {
+        dpadContainer.style.display = 'block';
+    }
 }
 
 // Ensure Cycle Message button is visible
 function showCycleMessageButton() {
-	const cycleMessageBtn = document.getElementById('cycle-message-btn');
-	if (cycleMessageBtn) {
-		cycleMessageBtn.style.display = 'inline-block';
-	}
+    const cycleMessageBtn = document.getElementById('cycle-message-btn');
+    if (cycleMessageBtn) {
+        cycleMessageBtn.style.display = 'block';
+    }
 }
 
 
 
 // Show/Hide Stop Reading button
 function showStopReadingButton() {
-	const stopBtn = document.getElementById('stop-reading-btn');
-	if (stopBtn) {
-		stopBtn.style.display = 'inline-block';
-	}
+    const stopBtn = document.getElementById('stop-reading-btn');
+    if (stopBtn) {
+        stopBtn.style.display = 'block';
+    }
 }
 
 function hideStopReadingButton() {
-	const stopBtn = document.getElementById('stop-reading-btn');
-	if (stopBtn) {
-		stopBtn.style.display = 'none';
-	}
+    const stopBtn = document.getElementById('stop-reading-btn');
+    if (stopBtn) {
+        stopBtn.style.display = 'none';
+    }
 }
 
 // Listen for messages from iframe (if needed)
 window.addEventListener('message', (event) => {
     // Handle any messages from iframe if needed
     console.log('Message from iframe:', event.data);
-    
+
     // Check if sign collision occurred
     if (event.data.type === 'SIGN_COLLISION') {
         // Show the Read sign button, but do not hide movement buttons yet
         const readSignBtn = document.getElementById('read-sign-btn');
         if (readSignBtn) {
-            readSignBtn.style.display = 'inline-block';
+            readSignBtn.style.opacity = '1';
+            readSignBtn.style.pointerEvents = 'auto';
         }
     }
 
@@ -338,16 +362,17 @@ window.addEventListener('message', (event) => {
         showStopReadingButton();
         const cycleMessageBtn = document.getElementById('cycle-message-btn');
         if (cycleMessageBtn) {
-            cycleMessageBtn.style.display = 'inline-block';
+            cycleMessageBtn.style.display = 'block';
         }
     }
-    
+
     // Check if sign exit occurred
     if (event.data.type === 'SIGN_EXIT') {
         // Hide the Read sign button when player moves away
         const readSignBtn = document.getElementById('read-sign-btn');
         if (readSignBtn) {
-            readSignBtn.style.display = 'none';
+            readSignBtn.style.opacity = '0';
+            readSignBtn.style.pointerEvents = 'none';
         }
     }
 }); 
