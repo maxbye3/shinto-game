@@ -63,7 +63,7 @@
     background-color: #333;
     border: 2px solid #666;
     color: #ccc;
-    padding: 12px 4px;
+    padding: 12px 1px;
     border-radius: 8px;
     font-family: 'Orbitron', monospace;
     font-size: 16px;
@@ -278,7 +278,7 @@
 /* Mobile-specific styles */
 @media (max-width: 875px) {
     .controls-square {
-        bottom: -10px;
+        bottom: 0px;
         width: 100vw;
         height: auto;
         padding: 10px;

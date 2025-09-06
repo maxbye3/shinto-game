@@ -43,67 +43,67 @@ const successMessages = [
 let currentMessageIndex = 0;
 
 // Function to create blue square on the map
-function createBlueSquare() {
+function createdialogueContent() {
     // Remove existing instance to prevent duplicates
-    const existingBlue = document.getElementById('blue-square');
-    if (existingBlue) existingBlue.remove();
+    const existingContent = document.getElementById('dialogue-container');
+    if (existingContent) existingContent.remove();
 
     // Create blue square element
-    const blueSquare = document.createElement('div');
-    blueSquare.id = 'blue-square';
-    blueSquare.textContent = shintoMessages[currentMessageIndex];
+    const dialogueContent = document.createElement('div');
+    dialogueContent.id = 'dialogue-container';
+    dialogueContent.textContent = shintoMessages[currentMessageIndex];
 
     // Add blue square to the map
     const map = document.getElementById('map');
     if (map) {
-        map.appendChild(blueSquare);
+        map.appendChild(dialogueContent);
     }
 }
 
 // Function to cycle through messages
 function cycleShintoMessage() {
-    const blueSquare = document.getElementById('blue-square');
-    if (blueSquare) {
+    const dialogueContent = document.getElementById('dialogue-container');
+    if (dialogueContent) {
         currentMessageIndex = (currentMessageIndex + 1) % shintoMessages.length;
-        blueSquare.textContent = shintoMessages[currentMessageIndex];
+        dialogueContent.textContent = shintoMessages[currentMessageIndex];
     }
 }
 
 // Function to create red square on the map
-function createRedSquare() {
+function createdialogueTitle() {
     // Remove existing instance to prevent duplicates
-    const existingRed = document.getElementById('red-square');
-    if (existingRed) existingRed.remove();
+    const existingTitle = document.getElementById('dialogue-box-title');
+    if (existingTitle) existingTitle.remove();
 
     // Create red square element
-    const redSquare = document.createElement('div');
-    redSquare.id = 'red-square';
-    redSquare.textContent = 'sign';
+    const dialogueTitle = document.createElement('div');
+    dialogueTitle.id = 'dialogue-box-title';
+    dialogueTitle.innerHTML = '<img src="img/sign.png" alt="Sign" class="sign-icon" style="margin-right: 5px; width: 20px; height: 20px;"> Sign';
 
     // Add red square to the map
     const map = document.getElementById('map');
     if (map) {
-        map.appendChild(redSquare);
+        map.appendChild(dialogueTitle);
     }
 }
 
 // Function to create success squares (blue and red) with success message
 function createSuccessSquares() {
     // Create blue square with success message
-    const blueSquare = document.createElement('div');
-    blueSquare.id = 'blue-square';
-    blueSquare.innerHTML = successMessages[0];
+    const dialogueContent = document.createElement('div');
+    dialogueContent.id = 'dialogue-container';
+    dialogueContent.innerHTML = successMessages[0];
 
     // Create red square
-    const redSquare = document.createElement('div');
-    redSquare.id = 'red-square';
-    redSquare.textContent = 'nice';
+    const dialogueTitle = document.createElement('div');
+    dialogueTitle.id = 'dialogue-box-title';
+    dialogueTitle.textContent = 'nice';
 
     // Add both squares to the map
     const map = document.getElementById('map');
     if (map) {
-        map.appendChild(blueSquare);
-        map.appendChild(redSquare);
+        map.appendChild(dialogueContent);
+        map.appendChild(dialogueTitle);
     }
 }
 

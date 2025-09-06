@@ -96,13 +96,13 @@ window.addEventListener('message', (event) => {
         window.ignoreSignCollisionUntilExit = true;
     } else if (event.data.type === 'HIDE_SQUARES') {
         // Hide all red and blue squares (in case duplicates exist)
-        const squares = document.querySelectorAll('#blue-square, #red-square');
+        const squares = document.querySelectorAll('#dialogue-container, #dialogue-box-title');
         squares.forEach((el) => el.remove());
     } else if (event.data.type === 'READ_SIGN') {
         // Enter reading mode: stop movement, create squares
         window.stopPlayerMovement = true;
-        if (typeof createBlueSquare === 'function') createBlueSquare();
-        if (typeof createRedSquare === 'function') createRedSquare();
+        if (typeof createdialogueContent === 'function') createdialogueContent();
+        if (typeof createdialogueTitle === 'function') createdialogueTitle();
     }
 });
 
@@ -298,8 +298,8 @@ function gameLoop() {
                     }
                     // Enter reading state: stop movement and show sign content
                     window.stopPlayerMovement = true;
-                    if (typeof createBlueSquare === 'function') createBlueSquare();
-                    if (typeof createRedSquare === 'function') createRedSquare();
+                    if (typeof createdialogueContent === 'function') createdialogueContent();
+                    if (typeof createdialogueTitle === 'function') createdialogueTitle();
                     if (window.parent && window.parent !== window) {
                         window.parent.postMessage({ type: 'ENTER_READING' }, '*');
                     }
