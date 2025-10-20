@@ -59,6 +59,44 @@
 }
 
 /* Sleek read sign button */
+#skip-intro {
+    background-color: #333;
+    border: 2px solid #666;
+    color: #ccc;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    margin: 0;
+    width: auto;
+    letter-spacing: 2px;
+    min-width: 140px;
+    text-transform: uppercase;
+}
+
+#skip-intro:hover {
+    background-color: #555;
+    color: white;
+    border-color: #888;
+}
+
+#skip-intro:active {
+    background-color: #222;
+    color: white;
+    transform: scale(0.95);
+}
+
 #read-sign-btn {
     background-color: #333;
     border: 2px solid #666;

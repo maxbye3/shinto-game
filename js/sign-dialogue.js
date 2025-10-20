@@ -37,7 +37,8 @@ const shintoMessages = [
 ];
 
 const successMessages = [
-    "Congrats! </br> The center of the gate is reserved for the kami. </br></br>  You’ve reached the rank of: </br></br> “incompetent gaijin”",
+    // "Congrats! </br> The center of the gate is reserved for the kami. </br></br>  You’ve reached the rank of: </br></br> “incompetent gaijin”",
+    "Well done! When approaching a shrine you should pass through a torii gate but superstitiously the centre of the gate is reserved for the kami."
 ];
 
 let currentMessageIndex = 0;

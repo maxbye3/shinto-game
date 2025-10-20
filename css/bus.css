@@ -1,0 +1,31 @@
+.bus {
+    bottom: 8%;
+    right: -162px;
+    width: 160px;
+    position: absolute;
+    animation-name: bus-drive-in, bus-drive-out;
+    animation-duration: 3s, 3s;
+    animation-delay: 0s, 5s;
+    animation-fill-mode: forwards, forwards;
+    animation-timing-function: ease, ease-in;
+}
+
+@keyframes bus-drive-in {
+    from {
+        right: -162px;
+    }
+
+    to {
+        right: 62px;
+    }
+}
+
+@keyframes bus-drive-out {
+    from {
+        right: 62px;
+    }
+
+    to {
+        right: 400px;
+    }
+}

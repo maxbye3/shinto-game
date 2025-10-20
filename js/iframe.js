@@ -1,5 +1,6 @@
 // iframe.js - Handles communication between parent page and iframe
 const iframe = document.querySelector('iframe');
+let skipIntroButton = null;
 
 // Function to send message to iframe
 function sendMessageToIframe(message) {
@@ -145,11 +146,38 @@ function focusIframe() {
     }
 }
 
+function setSkipIntroVisibility(isVisible) {
+    if (!skipIntroButton) {
+        skipIntroButton = document.getElementById('skip-intro');
+    }
+
+    if (!skipIntroButton) {
+        return;
+    }
+    const readBtn = document.getElementById('read-sign-btn');
+    if (readBtn) {
+        readBtn.style.display = isVisible ? 'none' : 'block';
+    }
+    skipIntroButton.style.display = isVisible ? 'flex' : 'none';
+    skipIntroButton.style.opacity = isVisible ? '1' : '0';
+    skipIntroButton.style.pointerEvents = isVisible ? 'auto' : 'none';
+}
+
 // Add click event to iframe to ensure it gets focus
 document.addEventListener('DOMContentLoaded', () => {
     if (iframe) {
         iframe.addEventListener('click', () => {
             focusIframe();
+        });
+    }
+
+    skipIntroButton = document.getElementById('skip-intro');
+    if (skipIntroButton) {
+        skipIntroButton.addEventListener('click', () => {
+            sendMessageToIframe({
+                type: 'BUS_SKIP_SPEEDUP'
+            });
+            skipIntroButton.style.pointerEvents = 'none';
         });
     }
 });
@@ -217,4 +245,14 @@ document.addEventListener('DOMContentLoaded', () => {
     addButtonEvents(walkDownLeftBtn, walkDownLeft);
     addButtonEvents(walkDownRightBtn, walkDownRight);
 
+});
+
+window.addEventListener('message', (event) => {
+    if (!event || !event.data) {
+        return;
+    }
+
+    if (event.data.type === 'BUS_SKIP_VISIBILITY') {
+        setSkipIntroVisibility(Boolean(event.data.visible));
+    }
 });
