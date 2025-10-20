@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sendMessageToIframe({
                 type: 'BUS_SKIP_SPEEDUP'
             });
-            skipIntroButton.style.pointerEvents = 'none';
+            setSkipIntroVisibility(false);
         });
     }
 });
