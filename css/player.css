@@ -5,9 +5,20 @@
     background-size: 245px 245px;
     background-position: 0px 0px;
     position: absolute;
-    top: 360px;
+    top: 590px;
     left: 180px;
     transition: top 0.05s, left 0.05s;
     image-rendering: pixelated;
     z-index: 1;
+    animation: none;
+}
+
+@keyframes player-landing {
+    from {
+        top: 590px;
+    }
+
+    to {
+        top: 360px;
+    }
 }

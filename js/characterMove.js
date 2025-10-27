@@ -7,7 +7,9 @@ const mapWidth = 350;
 const mapHeight = 400;
 const speed = 1;
 
-let position = { top: 360, left: 180 };
+let position = { top: 590, left: 180 };
+let playerAnimationsAccelerated = false;
+let landingAnimationInProgress = false;
 let pressedKeys = new Set();
 let animationFrame = 0;
 let animationTimer = 0;
@@ -98,13 +100,44 @@ window.addEventListener('message', (event) => {
         // Hide all red and blue squares (in case duplicates exist)
         const squares = document.querySelectorAll('#dialogue-container, #dialogue-box-title');
         squares.forEach((el) => el.remove());
-    } else if (event.data.type === 'READ_SIGN') {
-        // Enter reading mode: stop movement, create squares
-        window.stopPlayerMovement = true;
-        if (typeof createdialogueContent === 'function') createdialogueContent();
-        if (typeof createdialogueTitle === 'function') createdialogueTitle();
-    }
+} else if (event.data.type === 'READ_SIGN') {
+    // Enter reading mode: stop movement, create squares
+    window.stopPlayerMovement = true;
+    if (typeof createdialogueContent === 'function') createdialogueContent();
+    if (typeof createdialogueTitle === 'function') createdialogueTitle();
+} else if (event.data.type === 'BUS_SKIP_SPEEDUP') {
+    speedUpPlayerAnimations();
+}
 });
+
+function startPlayerLandingAnimation() {
+    if (!character || landingAnimationInProgress || position.top <= 360) {
+        return;
+    }
+
+    const duration = playerAnimationsAccelerated ? 0.3 : 3;
+
+    landingAnimationInProgress = true;
+    character.style.animation = 'none';
+    void character.offsetWidth;
+    character.style.animation = `player-landing ${duration}s linear forwards`;
+}
+
+function speedUpPlayerAnimations() {
+    if (!character) {
+        return;
+    }
+
+    playerAnimationsAccelerated = true;
+
+    if (landingAnimationInProgress) {
+        character.style.animation = 'none';
+        void character.offsetWidth;
+        character.style.animation = 'player-landing 0.3s linear forwards';
+    }
+}
+
+window.startPlayerLandingAnimation = startPlayerLandingAnimation;
 
 // Update character sprite animation
 function updateAnimation(isMoving) {
@@ -320,5 +353,21 @@ function gameLoop() {
 
 // Start the game loop when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    if (character) {
+        character.style.animation = 'none';
+        character.addEventListener('animationend', (event) => {
+            if (event.animationName === 'player-landing') {
+                position.top = 360;
+                character.style.top = `${position.top}px`;
+                character.style.animation = 'none';
+                landingAnimationInProgress = false;
+            }
+        });
+    }
+
+    if (window.parent === window || !document.querySelector('.bus')) {
+        startPlayerLandingAnimation();
+    }
+
     gameLoop();
 });

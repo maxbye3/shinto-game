@@ -78,8 +78,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     busElement.addEventListener('animationend', (event) => {
+        if (event.animationName === 'bus-drive-in' && typeof window.startPlayerLandingAnimation === 'function') {
+            window.startPlayerLandingAnimation();
+        }
+
         if (event.animationName === 'bus-drive-out') {
             notifyParent(false);
+            window.parent.postMessage({
+                type: 'BUS_INTRO_COMPLETE'
+            }, '*');
         }
     });
 

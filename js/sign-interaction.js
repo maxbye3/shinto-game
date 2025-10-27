@@ -20,7 +20,7 @@ function hideMovementButtons() {
 function showMovementButtons() {
     const dpadContainer = document.querySelector('.dpad-container');
     if (dpadContainer) {
-        dpadContainer.style.display = 'block';
+        dpadContainer.style.display = 'flex';
     }
 }
 
@@ -50,6 +50,8 @@ function hideStopReadingButton() {
 // Initialize sign interaction functionality
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Sign interaction script loaded');
+
+    hideMovementButtons();
 
     // Read sign button events
     const readSignBtn = document.getElementById('read-sign-btn');
@@ -166,6 +168,11 @@ window.addEventListener('message', (event) => {
         if (cycleMessageBtn) {
             cycleMessageBtn.style.display = 'block';
         }
+    }
+
+    if (event.data.type === 'BUS_INTRO_COMPLETE') {
+        console.log('Bus intro complete, showing movement buttons');
+        showMovementButtons();
     }
 
     // Check if sign exit occurred
