@@ -11,6 +11,7 @@
     image-rendering: pixelated;
     z-index: 1;
     animation: none;
+    opacity: 0;
 }
 
 @keyframes player-landing {

@@ -3,6 +3,7 @@
     right: -162px;
     width: 160px;
     position: absolute;
+    z-index: 2;
     animation-name: bus-drive-in, bus-drive-out;
     animation-duration: 3s, 3s;
     animation-delay: 0s, 5s;

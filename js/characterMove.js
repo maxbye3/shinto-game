@@ -118,6 +118,12 @@ function startPlayerLandingAnimation() {
     const duration = playerAnimationsAccelerated ? 0.3 : 3;
 
     landingAnimationInProgress = true;
+    currentDirection = 'up';
+    animationFrame = 0;
+    animationTimer = 0;
+    character.style.opacity = '1';
+    character.style.backgroundPosition = '0px -108px';
+    character.style.transform = 'scaleX(1)';
     character.style.animation = 'none';
     void character.offsetWidth;
     character.style.animation = `player-landing ${duration}s linear forwards`;
@@ -206,7 +212,7 @@ function gameLoop() {
     // Check if player movement should be stopped due to sign collision
     if (window.stopPlayerMovement) {
         // Update animation without movement
-        updateAnimation(false);
+        updateAnimation(landingAnimationInProgress);
         // Continue the game loop but don't process movement
         requestAnimationFrame(gameLoop);
         return;
@@ -345,7 +351,7 @@ function gameLoop() {
     }
 
     // Update animation
-    updateAnimation(moved);
+    updateAnimation(moved || landingAnimationInProgress);
 
     // Continue the game loop
     requestAnimationFrame(gameLoop);
@@ -360,6 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 position.top = 360;
                 character.style.top = `${position.top}px`;
                 character.style.animation = 'none';
+                character.style.opacity = '1';
                 landingAnimationInProgress = false;
             }
         });
