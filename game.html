@@ -14,7 +14,8 @@
 </head>
 
 <body>
-    <div id="map">
+    <div id="loading-screen">Loading...</div>
+    <div id="map" hidden>
         <div id="torii"></div>
         <div id="player"></div>
         <div id="conclusion"></div>
@@ -36,9 +37,8 @@
         <img src="img/tree.png" alt="Tree" class="decor-tree">
         <img src="img/bus.png" alt="bus" class="bus">
     </div>
-
-
 </body>
+<script src="js/preload.js"></script>
 <script src="js/collision.js"></script>
 <script src="js/characterMove.js"></script>
 <script src="js/sign-interaction.js"></script>

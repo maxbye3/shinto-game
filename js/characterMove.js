@@ -10,6 +10,7 @@ const speed = 1;
 let position = { top: 590, left: 180 };
 let playerAnimationsAccelerated = false;
 let landingAnimationInProgress = false;
+let gameLoopStarted = false;
 let pressedKeys = new Set();
 let animationFrame = 0;
 let animationTimer = 0;
@@ -100,14 +101,14 @@ window.addEventListener('message', (event) => {
         // Hide all red and blue squares (in case duplicates exist)
         const squares = document.querySelectorAll('#dialogue-container, #dialogue-box-title');
         squares.forEach((el) => el.remove());
-} else if (event.data.type === 'READ_SIGN') {
-    // Enter reading mode: stop movement, create squares
-    window.stopPlayerMovement = true;
-    if (typeof createdialogueContent === 'function') createdialogueContent();
-    if (typeof createdialogueTitle === 'function') createdialogueTitle();
-} else if (event.data.type === 'BUS_SKIP_SPEEDUP') {
-    speedUpPlayerAnimations();
-}
+    } else if (event.data.type === 'READ_SIGN') {
+        // Enter reading mode: stop movement, create squares
+        window.stopPlayerMovement = true;
+        if (typeof createdialogueContent === 'function') createdialogueContent();
+        if (typeof createdialogueTitle === 'function') createdialogueTitle();
+    } else if (event.data.type === 'BUS_SKIP_SPEEDUP') {
+        speedUpPlayerAnimations();
+    }
 });
 
 function startPlayerLandingAnimation() {
@@ -357,6 +358,22 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
+function beginGameplay() {
+    if (gameLoopStarted) {
+        return;
+    }
+
+    gameLoopStarted = true;
+
+    if (window.parent === window || !document.querySelector('.bus')) {
+        startPlayerLandingAnimation();
+    }
+
+    gameLoop();
+}
+
+document.addEventListener('backgroundLoaded', beginGameplay);
+
 // Start the game loop when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     if (character) {
@@ -372,9 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (window.parent === window || !document.querySelector('.bus')) {
-        startPlayerLandingAnimation();
+    if (window.gameBackgroundReady) {
+        beginGameplay();
     }
-
-    gameLoop();
 });

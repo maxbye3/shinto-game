@@ -9,6 +9,7 @@
     animation-delay: 0s, 5s;
     animation-fill-mode: forwards, forwards;
     animation-timing-function: ease, ease-in;
+    animation-play-state: paused;
 }
 
 @keyframes bus-drive-in {

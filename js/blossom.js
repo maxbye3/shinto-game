@@ -96,12 +96,20 @@ class BlossomManager {
     }
 }
 
-// Initialize blossom manager when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    window.blossomManager = new BlossomManager();
-});
+const startBlossoms = () => {
+    if (window.blossomManager) {
+        return;
+    }
 
-// Export for module usage if needed
+    window.blossomManager = new BlossomManager();
+};
+
+document.addEventListener('backgroundLoaded', startBlossoms);
+
+if (window.gameBackgroundReady) {
+    startBlossoms();
+}
+
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = BlossomManager;
 }
